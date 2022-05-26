@@ -3,11 +3,13 @@ import React, { useState } from "react";
 
 const useUploadFile = () => {
 	const [snapshot, setSnapshot] = useState(null);
-	const [downloadUrl, setDownloadUrl] = useState(null);
+	const [error, setError] = useState(null);
 	const [uploading, setUploading] = useState(false);
+
 	const uploadFile = async (storageRef, file) => {
 		return new Promise((resolve, reject) => {
 			setUploading(true);
+			setError(undefined);
 			const uploadTask = uploadBytesResumable(storageRef, file);
 			uploadTask.on(
 				"state_changed",
@@ -15,14 +17,13 @@ const useUploadFile = () => {
 					setSnapshot(snapshot);
 				},
 				(error) => {
+					setUploading(false);
+					setError(error);
 					resolve(undefined);
 				},
 				() => {
 					setUploading(false);
 					setSnapshot(undefined);
-					getDownloadURL(uploadTask.snapshot.ref).then(
-						setDownloadUrl
-					);
 					resolve({
 						ref: uploadTask.snapshot.ref,
 					});
@@ -31,7 +32,7 @@ const useUploadFile = () => {
 		});
 	};
 
-	return { uploadFile, snapshot, downloadUrl, uploading };
+	return { uploadFile, snapshot, uploading, error };
 };
 
 export default useUploadFile;

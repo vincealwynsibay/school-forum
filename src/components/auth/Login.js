@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useLogin } from "../../hooks/useLogin";
+import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
 
 const Login = () => {
@@ -19,10 +20,13 @@ const Login = () => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 		login(email, password);
-		setFormData({
-			email: "",
-			password: "",
-		});
+
+		if (!error) {
+			setFormData({
+				email: "",
+				password: "",
+			});
+		}
 	};
 
 	return (
@@ -59,6 +63,9 @@ const Login = () => {
 				)}
 				{error && <p className='text-danger'>{error}</p>}
 			</Form>
+			<p>
+				Don't have an account? <Link to='/register'>Sign Up</Link>
+			</p>
 		</div>
 	);
 };

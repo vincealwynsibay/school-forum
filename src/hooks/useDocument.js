@@ -9,26 +9,28 @@ export const useDocument = (c, id) => {
 
 	// realtime document data
 	useEffect(() => {
-		const unsubscribe = onSnapshot(
-			doc(db, c, id),
-			(snapshot) => {
-				setIsPending(true);
-				// need to make sure the doc exists & has data
-				if (snapshot.data()) {
-					setDocument({ ...snapshot.data(), id: snapshot.id });
-					setError(null);
-				} else {
-					setError("No such document exists");
+		if (id) {
+			const unsubscribe = onSnapshot(
+				doc(db, c, id),
+				(snapshot) => {
+					setIsPending(true);
+					// need to make sure the doc exists & has data
+					if (snapshot.data()) {
+						setDocument({ ...snapshot.data(), id: snapshot.id });
+						setError(null);
+					} else {
+						setError("No such document exists");
+					}
+					setIsPending(false);
+				},
+				(err) => {
+					console.log(err.message);
+					setError("failed to get document");
 				}
-				setIsPending(false);
-			},
-			(err) => {
-				console.log(err.message);
-				setError("failed to get document");
-			}
-		);
-		// // unsubscribe on unmount
-		return () => unsubscribe();
+			);
+			// // unsubscribe on unmount
+			return () => unsubscribe();
+		}
 	}, [collection, id]);
 
 	return { document, error, isPending };

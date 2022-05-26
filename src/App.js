@@ -17,6 +17,9 @@ import LandingPage from "./components/layout/LandingPage";
 import Container from "react-bootstrap/Container";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
+import PrivateRoute from "./components/routing/PrivateRoute";
+import EditProfile from "./components/edit-profile/EditProfile";
+import EditAccount from "./components/edit-account/EditAccount";
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
@@ -53,6 +56,19 @@ const App = () => {
 								<Route
 									path='/profile/:id'
 									element={<Profile />}
+								/>
+								// Private Routes // Profile
+								<Route
+									path={`/settings/profile`}
+									element={
+										<PrivateRoute Component={EditProfile} />
+									}
+								/>
+								<Route
+									path={`/settings/account`}
+									element={
+										<PrivateRoute Component={EditAccount} />
+									}
 								/>
 							</Routes>
 						</div>

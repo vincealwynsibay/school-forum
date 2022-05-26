@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Container } from "react-bootstrap";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
+import { useDocument } from "../../hooks/useDocument";
+import { auth } from "../../utils/firebase";
 
 const NavigationBar = () => {
 	const { user } = useAuthContext();
+	const { document } = useDocument("users", user ? user.uid : null);
+
 	const { logout } = useLogout();
+
 	return (
 		<Navbar>
 			<Navbar.Brand as={Link} to='/'>
@@ -18,7 +23,7 @@ const NavigationBar = () => {
 
 			<Navbar.Toggle />
 			<Navbar.Collapse className='justify-content-end'>
-				{!user ? (
+				{!user && (
 					<>
 						<Navbar.Text as={Link} to='login' className='px-3'>
 							Login
@@ -27,12 +32,14 @@ const NavigationBar = () => {
 							Register
 						</Navbar.Text>
 					</>
-				) : (
+				)}
+				{user && document && (
 					<>
 						<Navbar.Text className='mx-3'>
 							Signed in as:{" "}
 							<Link to={`/profile/${user.uid}`}>
-								{user.displayName}
+								<img src={document.photoURL} />
+								{document.displayName}
 							</Link>
 						</Navbar.Text>
 						<a href='#' onClick={logout}>

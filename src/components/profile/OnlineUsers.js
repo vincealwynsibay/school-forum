@@ -11,7 +11,9 @@ export default function OnlineUsers() {
 			{error && <div>{error}</div>}
 			{documents &&
 				documents.map((user) =>
-					user.online ? <ProfileItem profile={user} /> : null
+					user.online ? (
+						<ProfileItem profile={user} key={user.id} />
+					) : null
 				)}
 		</div>
 	);

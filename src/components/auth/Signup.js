@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "../../hooks/useSignup";
 import Spinner from "../layout/Spinner";
+import { Link } from "react-router-dom";
 
 const Signup = () => {
 	const [formData, setFormData] = useState({
@@ -24,37 +25,6 @@ const Signup = () => {
 		e.preventDefault();
 		signup(email, password, displayName);
 	};
-
-	// const handleFileChange = (e) => {
-	// 	setFormData({ ...formData, profile: null });
-	// 	let selected = e.target.files[0];
-
-	// 	console.log(selected);
-	// 	if (!selected) {
-	// 		setFormData({
-	// 			...formData,
-	// 			profileError: "Please select a file",
-	// 		});
-	// 		return;
-	// 	}
-	// 	if (!selected.type.includes("image")) {
-	// 		setFormData({
-	// 			...formData,
-	// 			profileError: "Selected file must be an image",
-	// 		});
-	// 		return;
-	// 	}
-	// 	if (selected.size > 1000000) {
-	// 		setFormData({
-	// 			...formData,
-	// 			profileError: "Image file size must be less than 100kb",
-	// 		});
-	// 		return;
-	// 	}
-
-	// 	setFormData({ ...formData, profileError: null });
-	// 	setFormData({ ...formData, profile: selected });
-	// };
 
 	return (
 		<div>
@@ -93,19 +63,6 @@ const Signup = () => {
 					/>
 				</Form.Group>
 
-				{/* <Form.Group className='mb-3' controlId='formBasicPassword'>
-					<Form.Label>User Profile: </Form.Label>
-					<Form.Control
-						name='file'
-						type='file'
-						onChange={handleFileChange}
-					/>
-
-					{profileError && (
-						<div className='text-danger'>{profileError}</div>
-					)}
-				</Form.Group> */}
-
 				{!isPending && (
 					<Button variant='primary' type='submit'>
 						Register
@@ -118,6 +75,9 @@ const Signup = () => {
 				)}
 				{error && <div className='error'>{error}</div>}
 			</Form>
+			<p className='my-1'>
+				Already have an account? <Link to='/login'>Sign In</Link>
+			</p>
 		</div>
 	);
 };
