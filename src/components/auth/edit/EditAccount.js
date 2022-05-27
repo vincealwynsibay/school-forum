@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ChangeEmail from "./ChangeEmail";
 import ChangePassword from "./ChangePassword";
+import DeleteUserAccount from "./DeleteUserAccount";
 const EditAccount = () => {
 	const [formData, setFormData] = useState({ email: "", password: "" });
 
@@ -14,6 +15,7 @@ const EditAccount = () => {
 		<div>
 			<ChangeEmail handleChange={handleChange} email={email} />
 			<ChangePassword handleChange={handleChange} password={password} />
+			<DeleteUserAccount />
 		</div>
 	);
 };

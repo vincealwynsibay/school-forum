@@ -31,7 +31,7 @@ export const useDocument = (c, id) => {
 			// // unsubscribe on unmount
 			return () => unsubscribe();
 		}
-	}, [collection, id]);
+	}, [c, id]);
 
 	return { document, error, isPending };
 };

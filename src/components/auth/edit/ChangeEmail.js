@@ -1,6 +1,6 @@
 import { updateEmail } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../../utils/firebase";
 
 const ChangeEmail = ({ handleChange, email }) => {
 	const [show, setShow] = useState(false);

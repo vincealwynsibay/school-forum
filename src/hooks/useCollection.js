@@ -11,7 +11,6 @@ import { db } from "../utils/firebase";
 export const useCollection = (c, _q, _o) => {
 	const [documents, setDocuments] = useState(null);
 	const [error, setError] = useState(null);
-
 	// if we don't use a ref --> infinite loop in useEffect
 	// _q is an array and is "different" on every function call
 	const q = useRef(_q).current;
@@ -31,10 +30,10 @@ export const useCollection = (c, _q, _o) => {
 			ref,
 			(snapshot) => {
 				let results = [];
+
 				snapshot.docs.forEach((doc) => {
 					results.push({ ...doc.data(), id: doc.id });
 				});
-
 				// update state
 				setDocuments(results);
 				setError(null);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../../utils/firebase";
+import { auth } from "../../../utils/firebase";
 import { updatePassword } from "firebase/auth";
 
 const ChangePassword = ({ handleChange, password }) => {

@@ -20,6 +20,9 @@ const NavigationBar = () => {
 			<Navbar.Text as={Link} to='/profiles' className='px-3'>
 				Profiles
 			</Navbar.Text>
+			<Navbar.Text as={Link} to='/groups' className='px-3'>
+				Groups
+			</Navbar.Text>
 
 			<Navbar.Toggle />
 			<Navbar.Collapse className='justify-content-end'>
@@ -38,7 +41,7 @@ const NavigationBar = () => {
 						<Navbar.Text className='mx-3'>
 							Signed in as:{" "}
 							<Link to={`/profile/${user.uid}`}>
-								<img src={document.photoURL} />
+								{/* <img src={document.photoURL} /> */}
 								{document.displayName}
 							</Link>
 						</Navbar.Text>
