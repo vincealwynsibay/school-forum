@@ -13,7 +13,7 @@ const EditProfile = () => {
 	const [formData, setFormData] = useState({
 		displayName: "",
 		bio: "",
-		avatar: "",
+		avatar: null,
 	});
 
 	const { uid } = auth.currentUser;

@@ -17,7 +17,10 @@ const PostItem = ({ post }) => {
 					</Card.Subtitle>
 					{post.photoURL && <Card.Img src={post.photoURL}></Card.Img>}
 
-					<Card.Text as={Link} to={`/post/${post.id}`}>
+					<Card.Text
+						as={Link}
+						to={`/group/${post.group}/post/${post.id}`}
+					>
 						View post
 					</Card.Text>
 				</Card.Body>

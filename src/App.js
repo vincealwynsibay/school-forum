@@ -22,10 +22,14 @@ import EditProfile from "./components/profile/edit/EditProfile";
 import EditAccount from "./components/auth/edit/EditAccount";
 import Groups from "./components/groups/Groups";
 import Group from "./components/group/Group";
-import CreateGroup from "./components/groups/create/CreateGroup";
+import CreateGroup from "./components/group/create/CreateGroup";
 import Followers from "./components/profile/followers/Followers";
 import Following from "./components/profile/following/Following";
 import Members from "./components/group/members/Members";
+import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
+import CreatePost from "./components/post/create/CreatePost";
+import EditPost from "./components/post/edit/EditPost";
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
@@ -82,6 +86,16 @@ const App = () => {
 									path='/group/:id/members'
 									element={<Members />}
 								/>
+								{/* Group Posts */}
+								<Route
+									path='/group/:id/posts'
+									element={<Posts />}
+								/>
+								<Route
+									path='/group/:group_id/post/:post_id'
+									element={<Post />}
+								/>
+
 								{/* PRIVATE ROUTES */}
 
 								{/* Profile */}
@@ -102,14 +116,19 @@ const App = () => {
 
 								{/* Group */}
 								<Route
-									path='/groups/create'
+									path='/group/create'
 									element={<CreateGroup />}
 								/>
 
 								{/* Post */}
 								<Route
-									path='/groups/create'
-									element={<CreateGroup />}
+									path='/group/:group_id/post/create'
+									element={<CreatePost />}
+								/>
+								{/* Post */}
+								<Route
+									path='/group/:group_id/post/:post_id/edit'
+									element={<EditPost />}
 								/>
 							</Routes>
 						</div>

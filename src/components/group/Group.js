@@ -5,6 +5,7 @@ import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import EditDescription from "./edit/EditDescription";
 import Spinner from "../layout/Spinner";
+import Posts from "../posts/Posts";
 
 const Group = () => {
 	const { id } = useParams();
@@ -58,6 +59,23 @@ const Group = () => {
 						<Link to={`/group/${id}/members`}>
 							<p>Members: {group.members.length}</p>
 						</Link>
+					</div>
+					<div>
+						<h5>Posts</h5>
+
+						{auth.currentUser &&
+							group.members.some(
+								(member) => member === auth.currentUser.uid
+							) && (
+								<>
+									<Link to={`/group/${id}/post/create`}>
+										Create Post
+									</Link>
+								</>
+							)}
+						<div>
+							<Posts />
+						</div>
 					</div>
 				</>
 			) : (

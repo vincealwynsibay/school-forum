@@ -5,16 +5,11 @@ import PostsList from "./PostsList";
 
 const Posts = () => {
 	const { id } = useParams();
-	const { documents, error } = useCollection("groups", ["group", "==", id]);
-
+	const { documents, error } = useCollection("posts", ["group", "==", id]);
 	return (
 		<div>
-			{error && (
-				<p>
-					{error.message}
-					<PostsList posts={documents} />
-				</p>
-			)}
+			{error && <p>{error.message}</p>}
+			<PostsList posts={documents} />
 		</div>
 	);
 };

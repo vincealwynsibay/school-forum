@@ -2,6 +2,7 @@ import React from "react";
 import PostItem from "./PostItem";
 
 const PostsList = ({ posts }) => {
+	console.log(posts);
 	if (!posts) {
 		return null;
 	}
