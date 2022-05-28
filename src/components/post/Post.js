@@ -9,6 +9,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
+import Comments from "../comments/Comments";
 import Spinner from "../layout/Spinner";
 
 const Post = () => {
@@ -21,6 +22,15 @@ const Post = () => {
 	}
 	const upvote = async () => {
 		if (!post.upvotes.some((upvote) => upvote === auth.currentUser.uid)) {
+			if (
+				post.downvotes.some(
+					(downvote) => downvote === auth.currentUser.uid
+				)
+			) {
+				updateDoc(postRef, {
+					downvotes: arrayRemove(auth.currentUser.uid),
+				});
+			}
 			updateDoc(postRef, {
 				upvotes: arrayUnion(auth.currentUser.uid),
 			});
@@ -36,6 +46,13 @@ const Post = () => {
 				(downvote) => downvote === auth.currentUser.uid
 			)
 		) {
+			if (
+				post.upvotes.some((upvote) => upvote === auth.currentUser.uid)
+			) {
+				updateDoc(postRef, {
+					upvotes: arrayRemove(auth.currentUser.uid),
+				});
+			}
 			updateDoc(postRef, {
 				downvotes: arrayUnion(auth.currentUser.uid),
 			});
@@ -82,6 +99,9 @@ const Post = () => {
 							<button onClick={downvote}>downvote</button>
 						)}
 						<p>Downvotes: {post.downvotes.length}</p>
+					</div>
+					<div>
+						<Comments />
 					</div>
 				</div>
 			) : (

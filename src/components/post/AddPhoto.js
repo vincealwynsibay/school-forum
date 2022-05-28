@@ -43,9 +43,9 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 
 	return (
 		<div>
-			{uploading && <p>Uploading</p>}
 			<img src={post_photo && post_photo} />
 			<input type='file' name='avatar' onChange={handleFileChange} />
+			{uploading && <p>Uploading</p>}
 		</div>
 	);
 };
