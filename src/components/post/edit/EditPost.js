@@ -14,6 +14,8 @@ const EditPost = () => {
 	const { document: post, error, isPending } = useDocument("posts", post_id);
 	const navigate = useNavigate();
 
+	console.log(post_id);
+
 	useEffect(() => {
 		console.log(post);
 		if (post) {

@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDocument } from "../../../hooks/useDocument";
 import Spinner from "../../layout/Spinner";
@@ -14,20 +13,18 @@ const FollowerItem = ({ followingId }) => {
 	}
 
 	return (
-		<Card style={{ width: "18rem" }}>
-			<Card.Body>
-				<Card.Img src={following.photoURL}></Card.Img>
+		<div style={{ width: "18rem" }}>
+			<div>
+				<img src={following.photoURL} />
 
-				<Card.Title>{following.displayName}</Card.Title>
-				<Card.Subtitle className='mb-2 text-muted'>
-					{following.bio}
-				</Card.Subtitle>
+				<h2>{following.displayName}</h2>
+				<p className='mb-2 text-muted'>{following.bio}</p>
 
-				<Card.Text as={Link} to={`/profile/${following.id}`}>
+				<p as={Link} to={`/profile/${following.id}`}>
 					View Profile
-				</Card.Text>
-			</Card.Body>
-		</Card>
+				</p>
+			</div>
+		</div>
 	);
 };
 

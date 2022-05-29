@@ -9,7 +9,7 @@ const Groups = () => {
 
 	return (
 		<div>
-			{auth.currentUser && <Link to='/groups/create'>Create Group</Link>}
+			{auth.currentUser && <Link to='/group/create'>Create Group</Link>}
 			{error && <p>{error.message}</p>}
 			<GroupsList groups={documents} />
 		</div>

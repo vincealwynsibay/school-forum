@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useSignup } from "../../hooks/useSignup";
 import Spinner from "../layout/Spinner";
@@ -29,52 +28,52 @@ const Signup = () => {
 	return (
 		<div>
 			<h1>Register</h1>
-			<Form onSubmit={handleSubmit}>
-				<Form.Group className='mb-3' controlId='formBasicEmail'>
-					<Form.Label>Email address</Form.Label>
-					<Form.Control
+			<form onSubmit={handleSubmit}>
+				<div >
+					<label>Email address</label>
+					<input
 						type='email'
 						name='email'
 						placeholder='Enter email'
 						onChange={handleChange}
 						required
 					/>
-				</Form.Group>
+				</div>
 
-				<Form.Group className='mb-3' controlId='formBasicEmail'>
-					<Form.Label className=''>Username</Form.Label>
-					<Form.Control
+				<div className='mb-3' controlId='formBasicEmail'>
+					<label className=''>Username</label>
+					<input
 						type='text'
 						name='displayName'
 						placeholder='Enter Username'
 						onChange={handleChange}
 						required
 					/>
-				</Form.Group>
+				</div>
 
-				<Form.Group className='mb-3' controlId='formBasicPassword'>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
+				<div className='mb-3' controlId='formBasicPassword'>
+					<label>Password</label>
+					<input
 						name='password'
 						type='password'
 						placeholder='Password'
 						onChange={handleChange}
 						required
 					/>
-				</Form.Group>
+				</div>
 
 				{!isPending && (
-					<Button variant='primary' type='submit'>
+					<button  type='submit'>
 						Register
-					</Button>
+					</button>
 				)}
 				{isPending && (
-					<Button variant='primary' disabled>
+					<button  disabled>
 						<Spinner />
-					</Button>
+					</button>
 				)}
 				{error && <div className='error'>{error}</div>}
-			</Form>
+			</form>
 			<p className='my-1'>
 				Already have an account? <Link to='/login'>Sign In</Link>
 			</p>

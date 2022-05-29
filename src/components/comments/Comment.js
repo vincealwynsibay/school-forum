@@ -8,7 +8,6 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import React from "react";
-import { Card } from "react-bootstrap";
 import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import CreateReply from "./reply/CreateReply";
@@ -92,7 +91,7 @@ const Comment = ({ comment }) => {
 
 	return (
 		<div>
-			<Card style={{ width: "18rem" }}>
+			{/* <Card style={{ width: "18rem" }}>
 				<Card.Body>
 					<Card.Title>{commentUser.displayName}</Card.Title>
 					<Card.Subtitle className='mb-2 text-muted'>
@@ -122,7 +121,7 @@ const Comment = ({ comment }) => {
 					{/* <Card.Subtitle className='mb-2'>
 						<CreateReply saveNewReply={saveNewReply} />
 					</Card.Subtitle> */}
-					{/* <div>
+			{/* <div>
 						{comment.replies &&
 							comment.replies.map((reply, idx) => {
 								return (
@@ -136,9 +135,9 @@ const Comment = ({ comment }) => {
 						{comment.replies && (
 							<Replies replies={comment.replies} />
 						)}
-					</div> */}
+					</div> 
 				</Card.Body>
-			</Card>
+			</Card> */}
 		</div>
 	);
 };

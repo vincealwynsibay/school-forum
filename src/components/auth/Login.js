@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
@@ -32,37 +31,35 @@ const Login = () => {
 	return (
 		<div>
 			<h1>Login</h1>
-			<Form onSubmit={onSubmit}>
-				<Form.Group className='mb-3' controlId='formBasicEmail'>
-					<Form.Label>Email address</Form.Label>
-					<Form.Control
+			<form onSubmit={onSubmit}>
+				<div>
+					<label>Email address</label>
+					<input
 						type='email'
 						name='email'
 						placeholder='Enter email'
 						onChange={onChange}
 					/>
-				</Form.Group>
+				</div>
 
-				<Form.Group className='mb-3' controlId='formBasicPassword'>
-					<Form.Label>Password</Form.Label>
-					<Form.Control
+				<div>
+					<label>Password</label>
+					<input
 						name='password'
 						type='password'
 						placeholder='Password'
 						onChange={onChange}
 					/>
-				</Form.Group>
+				</div>
 				{isPending ? (
-					<Button variant='primary' type='submit' disabled>
+					<button type='submit' disabled>
 						<Spinner />
-					</Button>
+					</button>
 				) : (
-					<Button variant='primary' type='submit'>
-						Login
-					</Button>
+					<button type='submit'>Login</button>
 				)}
 				{error && <p className='text-danger'>{error}</p>}
-			</Form>
+			</form>
 			<p>
 				Don't have an account? <Link to='/register'>Sign Up</Link>
 			</p>

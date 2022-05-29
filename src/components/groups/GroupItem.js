@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
 
 const GroupItem = ({ group }) => {
 	if (!group) {
@@ -9,20 +8,16 @@ const GroupItem = ({ group }) => {
 
 	return (
 		<div>
-			<Card style={{ width: "18rem" }}>
-				<Card.Body>
-					<Card.Img src={group.photoURL}></Card.Img>
+			<div style={{ width: "18rem" }}>
+				<div>
+					<img src={group.photoURL} />
 
-					<Card.Title>{group.name}</Card.Title>
-					<Card.Subtitle className='mb-2 text-muted'>
-						{group.description}
-					</Card.Subtitle>
+					<h2>{group.name}</h2>
+					<p className='mb-2 text-muted'>{group.description}</p>
 
-					<Card.Text as={Link} to={`/group/${group.id}`}>
-						View Group
-					</Card.Text>
-				</Card.Body>
-			</Card>
+					<Link to={`/group/${group.id}`}>View Group</Link>
+				</div>
+			</div>
 		</div>
 	);
 };

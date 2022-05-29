@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -14,7 +13,6 @@ import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import NavigationBar from "./components/layout/NavigationBar";
 import LandingPage from "./components/layout/LandingPage";
-import Container from "react-bootstrap/Container";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -38,101 +36,82 @@ const App = () => {
 		<>
 			{isAuthReady && (
 				<Router>
-					<Container>
-						<NavigationBar />
-						<div>
-							<Routes>
-								<Route
-									exact
-									path='/'
-									element={<LandingPage />}
-								/>
-								{/* Auth */}
-								<Route
-									path='login'
-									element={
-										user ? <Navigate to='/' /> : <Login />
-									}
-								/>
-								<Route
-									path='register'
-									element={
-										user ? <Navigate to='/' /> : <Signup />
-									}
-								/>
-								{/*  Profiles */}
-								<Route
-									path='/profiles'
-									element={<Profiles />}
-								/>
-								<Route
-									path='/profile/:id'
-									element={<Profile />}
-								/>
-								{/* Profiles Followers & Following */}
-								<Route
-									path='/profile/:id/followers'
-									element={<Followers />}
-								/>
-								<Route
-									path='/profile/:id/following'
-									element={<Following />}
-								/>
-								{/* Groups */}
-								<Route path='/groups' element={<Groups />} />
-								<Route path='/group/:id' element={<Group />} />
-								{/* Group Members */}
-								<Route
-									path='/group/:id/members'
-									element={<Members />}
-								/>
-								{/* Group Posts */}
-								<Route
-									path='/group/:id/posts'
-									element={<Posts />}
-								/>
-								<Route
-									path='/group/:group_id/post/:post_id'
-									element={<Post />}
-								/>
-
-								{/* PRIVATE ROUTES */}
-
-								{/* Profile */}
-								<Route
-									path={`/settings/profile`}
-									element={
-										<PrivateRoute Component={EditProfile} />
-									}
-								/>
-
-								{/* Account */}
-								<Route
-									path={`/settings/account`}
-									element={
-										<PrivateRoute Component={EditAccount} />
-									}
-								/>
-
-								{/* Group */}
-								<Route
-									path='/group/create'
-									element={<CreateGroup />}
-								/>
-
-								{/* Post */}
-								<Route
-									path='/group/:group_id/post/create'
-									element={<CreatePost />}
-								/>
-								{/* Post */}
-								<Route
-									path='/group/:group_id/post/:post_id/edit'
-									element={<EditPost />}
-								/>
-							</Routes>
-						</div>
-					</Container>
+					<NavigationBar />
+					<div>
+						<Routes>
+							<Route exact path='/' element={<LandingPage />} />
+							Auth
+							<Route
+								path='login'
+								element={user ? <Navigate to='/' /> : <Login />}
+							/>
+							<Route
+								path='register'
+								element={
+									user ? <Navigate to='/' /> : <Signup />
+								}
+							/>
+							{/*  Profiles */}
+							<Route path='/profiles' element={<Profiles />} />
+							<Route path='/profile/:id' element={<Profile />} />
+							{/* Profiles Followers & Following */}
+							<Route
+								path='/profile/:id/followers'
+								element={<Followers />}
+							/>
+							<Route
+								path='/profile/:id/following'
+								element={<Following />}
+							/>
+							{/* Groups */}
+							<Route path='/groups' element={<Groups />} />
+							<Route path='/group/:id' element={<Group />} />
+							{/* Group Members */}
+							<Route
+								path='/group/:id/members'
+								element={<Members />}
+							/>
+							{/* Group Posts */}
+							<Route
+								path='/group/:id/posts'
+								element={<Posts />}
+							/>
+							<Route
+								path='/group/:group_id/post/:post_id'
+								element={<Post />}
+							/>
+							{/* PRIVATE ROUTES */}
+							{/* Profile */}
+							<Route
+								path={`/settings/profile`}
+								element={
+									<PrivateRoute Component={EditProfile} />
+								}
+							/>
+							{/* Account */}
+							<Route
+								path={`/settings/account`}
+								element={
+									<PrivateRoute Component={EditAccount} />
+								}
+							/>
+							{/* Group */}
+							<Route
+								path='/group/create'
+								element={<CreateGroup />}
+							/>
+							{/* Post */}
+							<Route
+								path='/group/:group_id/post/create'
+								element={<CreatePost />}
+							/>
+							{/* Post */}
+							<Route
+								path='/group/:group_id/post/:post_id/edit'
+								element={<EditPost />}
+							/>
+						</Routes>
+					</div>
 				</Router>
 			)}
 		</>

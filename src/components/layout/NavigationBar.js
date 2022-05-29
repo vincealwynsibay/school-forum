@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Container } from "react-bootstrap";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { Link } from "react-router-dom";
 import { useLogout } from "../../hooks/useLogout";
@@ -13,45 +12,37 @@ const NavigationBar = () => {
 	const { logout } = useLogout();
 
 	return (
-		<Navbar>
-			<Navbar.Brand as={Link} to='/'>
-				School Forum
-			</Navbar.Brand>
-			<Navbar.Text as={Link} to='/profiles' className='px-3'>
-				Profiles
-			</Navbar.Text>
-			<Navbar.Text as={Link} to='/groups' className='px-3'>
-				Groups
-			</Navbar.Text>
+		<nav>
+			<div>
+				<Link to='/'>School Forum</Link>
+				<Link to='profiles'>Profiles</Link>
+				<Link to='groups'>Groups</Link>
+			</div>
 
-			<Navbar.Toggle />
-			<Navbar.Collapse className='justify-content-end'>
-				{!user && (
-					<>
-						<Navbar.Text as={Link} to='login' className='px-3'>
-							Login
-						</Navbar.Text>
-						<Navbar.Text as={Link} to='register'>
-							Register
-						</Navbar.Text>
-					</>
-				)}
-				{user && document && (
-					<>
-						<Navbar.Text className='mx-3'>
-							Signed in as:{" "}
-							<Link to={`/profile/${user.uid}`}>
-								{/* <img src={document.photoURL} /> */}
-								{document.displayName}
-							</Link>
-						</Navbar.Text>
-						<a href='#' onClick={logout}>
-							Logout
-						</a>
-					</>
-				)}
-			</Navbar.Collapse>
-		</Navbar>
+			{!user && (
+				<>
+					<Link to='login' className='px-3'>
+						Login
+					</Link>
+					<Link to='register'>Register</Link>
+				</>
+			)}
+
+			{user && document && (
+				<>
+					<p className='mx-3'>
+						Signed in as:{" "}
+						<Link to={`/profile/${user.uid}`}>
+							{/* <img src={document.photoURL} /> */}
+							{document.displayName}
+						</Link>
+					</p>
+					<a href='#' onClick={logout}>
+						Logout
+					</a>
+				</>
+			)}
+		</nav>
 	);
 };
 

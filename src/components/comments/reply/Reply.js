@@ -6,11 +6,11 @@ import {
 	updateDoc,
 } from "firebase/firestore";
 import React from "react";
-import { Card } from "react-bootstrap";
 import { useDocument } from "../../../hooks/useDocument";
 import { auth, db } from "../../../utils/firebase";
 import CreateReply from "./CreateReply";
 import Replies from "./Replies";
+
 const Reply = ({ reply, idx }) => {
 	const { document: replyUser } = useDocument("users", reply.user);
 	console.log(idx, reply);
@@ -35,14 +35,10 @@ const Reply = ({ reply, idx }) => {
 
 	return (
 		<div>
-			<Card style={{ width: "18rem" }} className={`mx-${idx * 3}`}>
-				<Card.Body>
-					<Card.Title>
-						{replyUser && replyUser.displayName}
-					</Card.Title>
-					<Card.Subtitle className='mb-2 text-muted'>
-						{reply.content}
-					</Card.Subtitle>
+			<div style={{ width: "18rem" }} className={`mx-${idx * 3}`}>
+				<div>
+					<h2>{replyUser && replyUser.displayName}</h2>
+					<p className='mb-2 text-muted'>{reply.content}</p>
 
 					{/* <Card.Subtitle className='mb-2'>
 						<CreateReply saveNewReply={handleReplyToReply} />
@@ -50,8 +46,8 @@ const Reply = ({ reply, idx }) => {
 					{/* <div>
 						{reply.replies && <Replies replies={reply.replies} />}
 					</div> */}
-				</Card.Body>
-			</Card>
+				</div>
+			</div>
 		</div>
 	);
 };

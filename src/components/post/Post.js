@@ -11,12 +11,14 @@ import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import Comments from "../comments/Comments";
 import Spinner from "../layout/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const Post = () => {
-	const { post_id } = useParams();
+	const { group_id, post_id } = useParams();
 	const { document: post, error, isPending } = useDocument("posts", post_id);
 	const { document: author } = useDocument("users", post && post.author);
 	const postRef = doc(db, "posts", post_id);
+	const navigate = useNavigate();
 	if (isPending) {
 		return <Spinner />;
 	}
@@ -65,6 +67,7 @@ const Post = () => {
 
 	const deletePost = async () => {
 		await deleteDoc(doc(db, "posts", post_id));
+		navigate(`/group/${group_id}/post/${post_id}`);
 	};
 
 	return (

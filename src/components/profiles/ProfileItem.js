@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ProfileItem = ({ profile }) => {
@@ -8,20 +7,18 @@ const ProfileItem = ({ profile }) => {
 	}
 	console.log(profile);
 	return (
-		<Card style={{ width: "18rem" }}>
-			<Card.Body>
-				<Card.Img src={profile.photoURL}></Card.Img>
+		<div style={{ width: "18rem" }}>
+			<div>
+				<img src={profile.photoURL} />
 
-				<Card.Title>{profile.displayName}</Card.Title>
-				<Card.Subtitle className='mb-2 text-muted'>
-					{profile.bio}
-				</Card.Subtitle>
+				<h2>{profile.displayName}</h2>
+				<p className='mb-2 text-muted'>{profile.bio}</p>
 
-				<Card.Text as={Link} to={`/profile/${profile.id}`}>
+				<p as={Link} to={`/profile/${profile.id}`}>
 					View Profile
-				</Card.Text>
-			</Card.Body>
-		</Card>
+				</p>
+			</div>
+		</div>
 	);
 };
 
