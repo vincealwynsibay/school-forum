@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { auth } from "../../../utils/firebase";
 import { updatePassword } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const ChangePassword = ({ handleChange, password }) => {
 	const [show, setShow] = useState(false);
@@ -8,8 +9,8 @@ const ChangePassword = ({ handleChange, password }) => {
 		e.preventDefault();
 
 		await updatePassword(auth.currentUser, e.target[0].value);
-		console.log("Password successfully updated");
 		e.target[0].value = "";
+		toast.success("Password updated successfully");
 	};
 
 	return (

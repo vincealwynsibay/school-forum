@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import gravatar from "gravatar";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../../../utils/firebase";
+import toast from "react-hot-toast";
 
 const CreateGroup = () => {
 	const [formData, setFormData] = useState({ name: "", description: "" });
@@ -19,8 +20,9 @@ const CreateGroup = () => {
 		let count = 0;
 		querySnapshot.forEach((snapshot) => {
 			count += 1;
-			console.log(snapshot.data());
 		});
+
+		toast.error("Group already exists");
 
 		return count > 0 ? true : false;
 	};
@@ -45,6 +47,7 @@ const CreateGroup = () => {
 			});
 
 			if (docRef) {
+				toast.success("Group created successfully");
 				navigate(`/group/${docRef.id}`);
 			}
 		}

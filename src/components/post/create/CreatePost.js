@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { auth, db } from "../../../utils/firebase";
 import AddPhoto from "../AddPhoto";
-
+import toast from "react-hot-toast";
 const CreatePost = () => {
 	const [formData, setFormData] = useState({
 		title: "",
@@ -25,7 +25,6 @@ const CreatePost = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log({ ...formData });
 		const docRef = await addDoc(collection(db, "posts"), {
 			title,
 			content,
@@ -35,8 +34,9 @@ const CreatePost = () => {
 			upvotes: [],
 			downvotes: [],
 		});
-		console.log(docRef.id);
 		if (docRef) {
+			toast.success("Post created successfully");
+
 			navigate(`/group/${group_id}/post/${docRef.id}`);
 		}
 	};

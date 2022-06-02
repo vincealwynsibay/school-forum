@@ -1,6 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import useUploadFile from "../../../hooks/useUploadFile";
 import { db, storage } from "../../../utils/firebase";
 
@@ -22,13 +23,13 @@ const ChangeAvatar = ({ group }) => {
 		await updateDoc(firestoreRef, {
 			photoURL: url,
 		});
+		toast.success("Group Photo updated successfully");
 	};
 
 	const handleFileChange = (e) => {
 		setAvatar(null);
 		let selected = e.target.files[0];
 
-		console.log(selected);
 		if (!selected) {
 			setAvatarError("Please select a file");
 			return;

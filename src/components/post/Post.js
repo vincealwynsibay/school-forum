@@ -72,7 +72,7 @@ const Post = () => {
 
 	const deletePost = async () => {
 		await deleteDoc(doc(db, "posts", post_id));
-		navigate(`/group/${group_id}/post/${post_id}`);
+		navigate(`/group/${group_id}/`);
 	};
 
 	return (

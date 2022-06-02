@@ -12,7 +12,6 @@ import PostsList from "../posts/PostsList";
 const Profile = () => {
 	const { id } = useParams();
 	const { document, error, isPending } = useDocument("users", id);
-	console.log(document);
 	const { documents: posts, isPending2 } = useCollection("posts", [
 		"author",
 		"==",
@@ -44,7 +43,6 @@ const Profile = () => {
 		return <Spinner />;
 	}
 
-	console.log(posts);
 	return (
 		<div>
 			<div className='mx-24 mt-14 md:grid md:grid-cols-3 md:gap-8'>

@@ -1,5 +1,6 @@
 import { updateEmail } from "firebase/auth";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { auth } from "../../../utils/firebase";
 
 const ChangeEmail = ({ handleChange, email }) => {
@@ -7,10 +8,9 @@ const ChangeEmail = ({ handleChange, email }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(auth.currentUser);
 		await updateEmail(auth.currentUser, e.target[0].value);
-		console.log("Email successfully updated");
 		email = "";
+		toast.success("Email updated successfully");
 	};
 
 	return (

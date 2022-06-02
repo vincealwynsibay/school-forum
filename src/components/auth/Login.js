@@ -3,6 +3,7 @@ import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import toast from "react-hot-toast";
 
 const Login = () => {
 	const { login, isPending, error } = useLogin();
@@ -26,6 +27,7 @@ const Login = () => {
 				email: "",
 				password: "",
 			});
+			toast.success("Logged In Successfully");
 		}
 	};
 

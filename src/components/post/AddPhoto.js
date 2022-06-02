@@ -15,7 +15,6 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 
 		let selected = e.target.files[0];
 
-		// console.log(selected);
 		// Validates File
 		if (!selected) {
 			alert("Please select a file");

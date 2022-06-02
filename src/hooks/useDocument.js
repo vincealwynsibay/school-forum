@@ -24,7 +24,6 @@ export const useDocument = (c, id) => {
 					setIsPending(false);
 				},
 				(err) => {
-					console.log(err.message);
 					setError("failed to get document");
 				}
 			);

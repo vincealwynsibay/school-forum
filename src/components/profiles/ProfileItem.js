@@ -5,7 +5,6 @@ const ProfileItem = ({ profile }) => {
 	if (!profile) {
 		return null;
 	}
-	console.log(profile);
 	return (
 		<div style={{ width: "18rem" }}>
 			<div>

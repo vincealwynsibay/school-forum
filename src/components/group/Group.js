@@ -7,6 +7,7 @@ import EditDescription from "./edit/EditDescription";
 import Spinner from "../layout/Spinner";
 import Posts from "../posts/Posts";
 import ChangeAvatar from "./edit/ChangeAvatar";
+import toast from "react-hot-toast";
 
 const Group = () => {
 	const { id } = useParams();
@@ -21,11 +22,13 @@ const Group = () => {
 		updateDoc(groupRef, {
 			members: arrayUnion(auth.currentUser.uid),
 		});
+		toast.success(`You joined ${group.name}`);
 	};
 	const leaveGroup = async () => {
 		updateDoc(groupRef, {
 			members: arrayRemove(auth.currentUser.uid),
 		});
+		toast.success(`You left ${group.name}`);
 	};
 
 	return (

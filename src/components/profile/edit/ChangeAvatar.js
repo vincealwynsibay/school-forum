@@ -9,7 +9,6 @@ const ChangeAvatar = ({ handleSaveAvatarChanges }) => {
 		setAvatar(null);
 		let selected = e.target.files[0];
 
-		console.log(selected);
 		if (!selected) {
 			setAvatarError("Please select a file");
 			return;

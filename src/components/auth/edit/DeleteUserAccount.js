@@ -2,6 +2,7 @@ import { deleteUser } from "firebase/auth";
 import React from "react";
 import { auth } from "../../../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 const DeleteUserAccount = () => {
 	const navigate = useNavigate();
 	const deleteUserAcc = async () => {
@@ -11,6 +12,7 @@ const DeleteUserAccount = () => {
 
 		if (res.toLowerCase() === "n") {
 			deleteUser(auth.currentUser);
+			toast.success("User deleted successfully");
 			navigate("/");
 		}
 	};

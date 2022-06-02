@@ -9,6 +9,7 @@ import ChangeAvatar from "./ChangeAvatar";
 import ChangeBio from "./ChangeBio";
 import ChangeDisplayName from "./ChangeDisplayName";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
 	const [formData, setFormData] = useState({
@@ -49,6 +50,8 @@ const EditProfile = () => {
 				displayName: ele.value,
 			});
 		}
+
+		toast.success("Profile updated successfully");
 	};
 
 	const handleSaveAvatarChanges = async (file) => {
@@ -58,11 +61,10 @@ const EditProfile = () => {
 			ref(storage, `profiles/${document.id}/${file.name}`)
 		);
 
-		console.log(url);
 		await updateDoc(firestoreRef, {
 			photoURL: url,
 		});
-		navigate(`/profile/${document.id}`);
+		toast.success("Profile updated successfully");
 	};
 
 	return (

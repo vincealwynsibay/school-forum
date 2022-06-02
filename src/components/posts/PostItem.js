@@ -8,7 +8,6 @@ const PostItem = ({ post }) => {
 	if (!post || !user || !group) {
 		return null;
 	}
-	console.log(group);
 	return (
 		<div>
 			<div className='max-w-full px-10 my-4 py-6 bg-white rounded-lg shadow-md'>

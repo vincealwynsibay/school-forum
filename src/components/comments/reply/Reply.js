@@ -13,7 +13,6 @@ import Replies from "./Replies";
 
 const Reply = ({ reply, idx }) => {
 	const { document: replyUser } = useDocument("users", reply.user);
-	console.log(idx, reply);
 
 	const handleReplyToReply = async (content) => {
 		const replyRef = doc(db, "comments", reply.id);

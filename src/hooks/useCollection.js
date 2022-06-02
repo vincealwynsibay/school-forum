@@ -39,7 +39,6 @@ export const useCollection = (c, _q, _o) => {
 				setError(null);
 			},
 			(error) => {
-				console.log(error);
 				setError("could not fetch the data");
 			}
 		);

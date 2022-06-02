@@ -1,5 +1,6 @@
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { db } from "../../../utils/firebase";
 
 const EditDescription = ({ id, descriptionValue }) => {
@@ -11,6 +12,7 @@ const EditDescription = ({ id, descriptionValue }) => {
 		const ref = doc(db, "groups", id);
 		setShow(false);
 		await updateDoc(ref, { description });
+		toast.success("Group updated successfully");
 	};
 
 	return (

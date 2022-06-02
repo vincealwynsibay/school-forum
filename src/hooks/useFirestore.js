@@ -62,7 +62,6 @@ export const useFirestore = (c) => {
 	const [isCancelled, setIsCancelled] = useState(false);
 
 	// c ref
-	console.log(c);
 	const ref = collection(db, c);
 
 	// only dispatch if not cancelled
@@ -78,8 +77,6 @@ export const useFirestore = (c) => {
 
 		try {
 			const addedDocument = await addDoc(collection(db, c), { ...doc });
-			console.log(doc);
-			console.log(addedDocument);
 			dispatchIfNotCancelled({
 				type: "ADDED_DOCUMENT",
 				payload: addedDocument,

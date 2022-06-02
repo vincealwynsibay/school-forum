@@ -21,8 +21,6 @@ const Members = () => {
 		return null;
 	}
 
-	console.log(members);
-
 	return (
 		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
 			<h2 className='text-5xl font-medium mb-10'>Members</h2>

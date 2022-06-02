@@ -4,6 +4,7 @@ import { useSignup } from "../../hooks/useSignup";
 import Spinner from "../layout/Spinner";
 import { Link } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
+import toast from "react-hot-toast";
 
 const Signup = () => {
 	const [formData, setFormData] = useState({
@@ -24,6 +25,7 @@ const Signup = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		signup(email, password, displayName);
+		toast.success("Registered Successfully!");
 	};
 
 	return (
