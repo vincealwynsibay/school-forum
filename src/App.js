@@ -12,7 +12,6 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
 import NavigationBar from "./components/layout/NavigationBar";
-import LandingPage from "./components/layout/LandingPage";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -31,7 +30,6 @@ import EditPost from "./components/post/edit/EditPost";
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
-
 	return (
 		<>
 			{isAuthReady && (
@@ -39,7 +37,7 @@ const App = () => {
 					<NavigationBar />
 					<div>
 						<Routes>
-							<Route exact path='/' element={<LandingPage />} />
+							<Route exact path='/' element={<Posts />} />
 							Auth
 							<Route
 								path='login'
@@ -65,6 +63,7 @@ const App = () => {
 							/>
 							{/* Groups */}
 							<Route path='/groups' element={<Groups />} />
+							<Route path='/posts' element={<Posts />} />
 							<Route path='/group/:id' element={<Group />} />
 							{/* Group Members */}
 							<Route

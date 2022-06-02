@@ -22,8 +22,9 @@ const Following = () => {
 	}
 
 	return (
-		<div>
-			<div>
+		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+			<h2 className='text-5xl font-medium mb-10'>Members</h2>
+			<div className='grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
 				{following.map((following) => {
 					return (
 						<FollowingItem

@@ -10,16 +10,17 @@ const FollowerItem = ({ followerId }) => {
 	}
 
 	return (
-		<div style={{ width: "18rem" }}>
+		<Link to={`/profile/${follower.id}`}>
 			<div>
-				<img src={follower.photoURL} />
-
+				<div className='w-full aspect-w-1 aspect-h-1 bg-gray-200 overflow-hidden xl:aspect-w-7 xl:aspect-h-8'>
+					<img
+						src={follower.photoURL}
+						className='w-full h-full object-center object-cover group-hover:opacity-75'
+					/>
+				</div>
 				<h2>{follower.displayName}</h2>
-				<p className='mb-2 text-muted'>{follower.bio}</p>
-
-				<Link to={`/profile/${follower.id}`}>View Profile</Link>
 			</div>
-		</div>
+		</Link>
 	);
 };
 

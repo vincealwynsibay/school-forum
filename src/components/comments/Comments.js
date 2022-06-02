@@ -28,9 +28,11 @@ const Comments = () => {
 
 	return (
 		<div>
-			<CreateComment handleNewComment={handleNewComment} />
+			<h1 className='text-3xl font-medium mb-8'>Comments</h1>
+			{auth && auth.currentUser && (
+				<CreateComment handleNewComment={handleNewComment} />
+			)}
 			<div>
-				<h1>Comments</h1>
 				{error && <p>{error.message}</p>}
 				<CommentsList comments={documents} />
 			</div>

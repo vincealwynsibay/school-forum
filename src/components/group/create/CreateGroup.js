@@ -51,8 +51,8 @@ const CreateGroup = () => {
 	};
 
 	return (
-		<div>
-			<h1>Create Group</h1>
+		<div class='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+			<h1 className='text-3xl font-medium mb-4'>Create Group</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<input
@@ -61,19 +61,25 @@ const CreateGroup = () => {
 						value={name}
 						onChange={handleChange}
 						placeholder='Name'
+						className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 					/>
 				</div>
 				<div>
-					<input
+					<textarea
 						type='text'
 						name='description'
 						value={description}
 						onChange={handleChange}
 						placeholder='Description'
-					/>
+						className='shadow-sm mb-2 focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md'
+					></textarea>
 				</div>
 
-				<input type='submit' value='Create Group' />
+				<input
+					type='submit'
+					value='Create Group'
+					className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
+				/>
 			</form>
 		</div>
 	);

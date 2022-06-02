@@ -42,8 +42,8 @@ const CreatePost = () => {
 	};
 
 	return (
-		<div>
-			<h1>Create Post</h1>
+		<div class='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+			<h1 className='text-3xl font-medium mb-4'>Create Post</h1>
 			<form onSubmit={handleSubmit}>
 				<div>
 					<input
@@ -51,7 +51,8 @@ const CreatePost = () => {
 						name='title'
 						value={title}
 						onChange={handleChange}
-						placeholder='TItle'
+						placeholder='Title'
+						className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 					/>
 				</div>
 				<div>
@@ -61,6 +62,7 @@ const CreatePost = () => {
 						value={content}
 						onChange={handleChange}
 						placeholder='Content'
+						className='shadow-sm mb-2 focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md'
 					/>
 				</div>
 				<div>
@@ -70,7 +72,11 @@ const CreatePost = () => {
 					/>
 				</div>
 
-				<input type='submit' value='Create Post' />
+				<input
+					type='submit'
+					value='Create Post'
+					className='mt-4 mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
+				/>
 			</form>
 		</div>
 	);
