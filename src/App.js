@@ -27,6 +27,7 @@ import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
 import CreatePost from "./components/post/create/CreatePost";
 import EditPost from "./components/post/edit/EditPost";
+import toast, { Toaster } from "react-hot-toast";
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
@@ -111,6 +112,7 @@ const App = () => {
 							/>
 						</Routes>
 					</div>
+					<Toaster />
 				</Router>
 			)}
 		</>

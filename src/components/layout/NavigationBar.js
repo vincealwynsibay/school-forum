@@ -8,6 +8,7 @@ import { auth } from "../../utils/firebase";
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import toast from "react-hot-toast";
 
 const navigation = [
 	{ name: "Explore Communities", to: "/groups", current: false },
@@ -141,7 +142,12 @@ const NavigationBar = () => {
 													{({ active }) => (
 														<a
 															href='#'
-															onClick={logout}
+															onClick={() => {
+																logout();
+																toast.success(
+																	"Successfully Signed Out"
+																);
+															}}
 															className={classNames(
 																active
 																	? "bg-gray-100"
