@@ -38,19 +38,51 @@ const Group = () => {
 					<div className='flex gap-8'>
 						<img
 							src={group.photoURL}
-							className='w-60 border-solid border-2'
+							className='w-60 h-60 border-solid border-2'
 							alt={`${group.name} Group Photo`}
 						/>
-						<div>
-							<div>
-								<h3 className='text-3xl  font-bold leading-6 text-gray-900 mb-4'>
-									{group.name}
-								</h3>
+						<div className='w-full'>
+							<div className='w-full'>
+								<div className='flex w-full justify-between'>
+									<h3 className='text-3xl  font-bold leading-normal text-gray-900 mb-4'>
+										{group.name}
+									</h3>
+									<div>
+										{auth.currentUser && (
+											<>
+												{!group.members.some(
+													(member) =>
+														member ===
+														auth.currentUser.uid
+												) ? (
+													<button
+														className='mr-3 w-full sm:w-auto py-2 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
+														onClick={joinGroup}
+													>
+														Join
+													</button>
+												) : (
+													<button
+														className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
+														onClick={leaveGroup}
+													>
+														Leave
+													</button>
+												)}
+											</>
+										)}
+									</div>
+								</div>
+
 								<div className=''>
 									<p className='text-base'>
 										{group.description}
 									</p>
 									{auth.currentUser &&
+										group.members.some(
+											(member) =>
+												member === auth.currentUser.uid
+										) &&
 										auth.currentUser.uid ===
 											group.admin && (
 											<div>
@@ -75,36 +107,14 @@ const Group = () => {
 								</Link>
 							</div>
 						</div>
-						<div>
-							{auth.currentUser && (
-								<>
-									{!group.members.some(
-										(member) =>
-											member === auth.currentUser.uid
-									) ? (
-										<button
-											className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-											onClick={joinGroup}
-										>
-											Join
-										</button>
-									) : (
-										<button
-											className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-											onClick={leaveGroup}
-										>
-											Leave
-										</button>
-									)}
-								</>
-							)}
-						</div>
 					</div>
 
 					<div>
 						<div>
-							<div className='flex justify-between items-center mt-7'>
-								<h2 className='text-5xl font-medium'>Posts</h2>
+							<div className='flex justify-between items-center mt-16'>
+								<h2 className='text-3xl uppercase font-bold'>
+									Posts
+								</h2>
 								{auth.currentUser &&
 									group.members.some(
 										(member) =>

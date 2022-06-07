@@ -22,7 +22,9 @@ const CreateGroup = () => {
 			count += 1;
 		});
 
-		toast.error("Group already exists");
+		if (count > 0) {
+			toast.error("Group already exists");
+		}
 
 		return count > 0 ? true : false;
 	};

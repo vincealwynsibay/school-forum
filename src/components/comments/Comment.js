@@ -86,23 +86,85 @@ const Comment = ({ comment }) => {
 						<div className='flex gap-2'>
 							{auth.currentUser && (
 								<div
-									className='font-medium text-xs'
+									className='font-medium text-xs flex items-center '
 									onClick={upvote}
 								>
-									<span className='bg-green-400 px-2 py-1 mr-2 text-center rounded text-gray-100 cursor-pointer'>
-										Upvote
-									</span>
+									{!comment.upvotes.some(
+										(upvote) =>
+											upvote === auth.currentUser.uid
+									) ? (
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='h-6 w-6 mr-2 cursor-pointer hover:stroke-indigo-600'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+											strokeWidth={2}
+										>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M5 15l7-7 7 7'
+											/>
+										</svg>
+									) : (
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='h-6 w-6 mr-2 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+											strokeWidth={2}
+										>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M5 15l7-7 7 7'
+											/>
+										</svg>
+									)}
 									<span>{comment.upvotes.length}</span>
 								</div>
 							)}
 							{auth.currentUser && (
 								<div
-									className='font-medium text-xs'
+									className='font-medium text-xs flex items-center'
 									onClick={downvote}
 								>
-									<span className='bg-red-400 px-2 py-1 mr-2 text-center rounded text-gray-100 cursor-pointer'>
-										Downvote
-									</span>
+									{!comment.downvotes.some(
+										(downvote) =>
+											downvote === auth.currentUser.uid
+									) ? (
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='h-6 w-6 mr-2 cursor-pointer hover:stroke-indigo-600'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+											strokeWidth={2}
+										>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M19 9l-7 7-7-7'
+											/>
+										</svg>
+									) : (
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='h-6 w-6 mr-2 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+											strokeWidth={2}
+										>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M19 9l-7 7-7-7'
+											/>
+										</svg>
+									)}
 									<span>{comment.downvotes.length}</span>
 								</div>
 							)}
@@ -125,52 +187,6 @@ const Comment = ({ comment }) => {
 					</div>
 				</div>
 			</div>
-			{/* <Card style={{ width: "18rem" }}>
-				<Card.Body>
-					<Card.Subtitle className='mb-2 text-muted'>
-						
-					</Card.Subtitle>
-					<Card.Subtitle className='mb-2'>
-						<div>
-							{auth.currentUser && (
-								<button onClick={upvote}>upvote</button>
-							)}
-							<p>Upvotes: {comment.upvotes.length}</p>
-						</div>
-						<div>
-							{auth.currentUser && (
-								<button onClick={downvote}>downvote</button>
-							)}
-							<p>Downvotes: {comment.downvotes.length}</p>
-						</div>
-						{auth.currentUser &&
-							auth.currentUser.uid === comment.user && (
-								<a onClick={deleteComment} href='#'>
-									Delete Comment
-								</a>
-							)}
-					</Card.Subtitle>
-
-					{/* <Card.Subtitle className='mb-2'>
-						<CreateReply saveNewReply={saveNewReply} />
-					</Card.Subtitle> */}
-			{/* <div>
-						{comment.replies &&
-							comment.replies.map((reply, idx) => {
-								return (
-									<Reply
-										saveNewReply={saveNewReply}
-										reply={reply}
-										idx={idx}
-									/>
-								);
-							})}
-						{comment.replies && (
-							<Replies replies={comment.replies} />
-						)}
-					</div> 
-				</Card.Body>
-			</Card> */}
 		</div>
 	);
 };

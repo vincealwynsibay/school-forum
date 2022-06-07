@@ -13,7 +13,7 @@ const GroupItem = ({ group }) => {
 					<img
 						src={group.photoURL}
 						alt={`${group.name}'s Group Photo`}
-						className='w-full h-full object-center object-cover group-hover:opacity-75'
+						className='w-64 h-64 object-center object-cover group-hover:opacity-75'
 					/>
 				</div>
 				<p className='text-base font-semibold text-gray-900'>

@@ -25,7 +25,6 @@ const Signup = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		signup(email, password, displayName);
-		toast.success("Registered Successfully!");
 	};
 
 	return (
@@ -129,7 +128,7 @@ const Signup = () => {
 						</div>
 					</form>
 					<p>
-						Already have an account?
+						Already have an account?{" "}
 						<Link
 							to='/register'
 							className='text-indigo-600 hover:text-indigo-700'

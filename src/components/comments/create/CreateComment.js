@@ -13,6 +13,7 @@ const CreateComment = ({ handleNewComment }) => {
 				name='comment'
 				value={value}
 				onChange={(e) => setValue(e.target.value)}
+				rows='6'
 				className='shadow-sm mb-2 focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md'
 			></textarea>
 			<input

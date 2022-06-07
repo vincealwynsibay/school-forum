@@ -28,7 +28,7 @@ const Comments = () => {
 
 	return (
 		<div>
-			<h1 className='text-3xl font-medium mb-8'>Comments</h1>
+			<h1 className='text-3xl font-semibold mb-8 mt-10'>Comments</h1>
 			{auth && auth.currentUser && (
 				<CreateComment handleNewComment={handleNewComment} />
 			)}

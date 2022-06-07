@@ -53,13 +53,13 @@ const NavigationBar = () => {
 								<div className='flex-shrink-0 flex items-center'>
 									<Link
 										to='/'
-										className='font-medium text-indigo-600'
+										className='bg-gray-900 hover:bg-black font-bold text-white px-3 py-3 rounded-md text-sm  border-solid'
 									>
-										School Forum
+										SCHOOL FORUM
 									</Link>
 								</div>
 								<div className='hidden sm:block sm:ml-6'>
-									<div className='flex space-x-4'>
+									<div className='flex space-x-4 items-center'>
 										{navigation.map((item) => (
 											<Link
 												key={item.name}
@@ -170,7 +170,7 @@ const NavigationBar = () => {
 											<div className='rounded-md shadow'>
 												<Link
 													to='login'
-													className='w-full flex items-center justify-center px-8 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+													className='w-full flex items-center justify-center px-8 py-2 rounded-md shadow-sm text-base font-bold font-sans border-2 text-indigo-200 border-indigo-700  hover:text-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
 												>
 													Login
 												</Link>
@@ -178,7 +178,7 @@ const NavigationBar = () => {
 											<div className='hidden sm:inline mt-3 sm:mt-0 sm:ml-3'>
 												<Link
 													to='register'
-													className='w-full flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200'
+													className='w-full flex items-center justify-center px-8 py-2 rounded-md border border-transparent text-base font-bold bg-indigo-600  text-white hover:bg-indigo-700'
 												>
 													Register
 												</Link>

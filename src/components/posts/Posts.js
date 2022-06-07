@@ -1,4 +1,5 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../hooks/useCollection";
 import PostsList from "./PostsList";

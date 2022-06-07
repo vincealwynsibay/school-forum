@@ -33,7 +33,7 @@ const PostItem = ({ post }) => {
 					)}
 				</div>
 				<div className='flex justify-between items-center '>
-					<div className=' flex items-center justify-between max-w-xs mt-6'>
+					<div className=' flex items-center justify-between max-w-sm mt-6'>
 						<Link
 							className='text-md text-gray-700 font-medium hover:text-gray-600  flex items-center'
 							to={`/group/${post.group}`}

@@ -29,10 +29,11 @@ import CreatePost from "./components/post/create/CreatePost";
 import EditPost from "./components/post/edit/EditPost";
 import toast, { Toaster } from "react-hot-toast";
 
+import "./App.css";
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
 	return (
-		<>
+		<div className='App'>
 			{isAuthReady && (
 				<Router>
 					<NavigationBar />
@@ -115,7 +116,7 @@ const App = () => {
 					<Toaster />
 				</Router>
 			)}
-		</>
+		</div>
 	);
 };
 

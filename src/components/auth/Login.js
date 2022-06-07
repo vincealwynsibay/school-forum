@@ -18,17 +18,9 @@ const Login = () => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
-	const onSubmit = (e) => {
+	const onSubmit = async (e) => {
 		e.preventDefault();
-		login(email, password);
-
-		if (!error) {
-			setFormData({
-				email: "",
-				password: "",
-			});
-			toast.success("Logged In Successfully");
-		}
+		await login(email, password);
 	};
 
 	return (
