@@ -32,12 +32,6 @@ const Signup = () => {
 			<div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
 				<div className='max-w-md w-full space-y-8'>
 					<div>
-						{/* <img
-							className=''
-							src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
-							alt='Workflow'
-						/>
-						<span className='absolute left-0 inset-y-0 flex items-center pl-3'> */}
 						<LockClosedIcon
 							className='mx-auto h-12 w-auto text-indigo-500 '
 							aria-hidden='true'

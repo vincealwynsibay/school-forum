@@ -50,7 +50,9 @@ const Profile = () => {
 					<div className='px-4 sm:px-0'>
 						<div className='max-w-2xl pt-5 mx-auto pb-10 sm:pb-16 sm:px-6 lg:max-w-full'>
 							<h3 className='text-3xl font-bold leading-6 text-gray-900 mb-3'>
-								Your Posts
+								{auth.currentUser.uid === document.id
+									? `Your Posts`
+									: `${document.name}'s Posts`}
 							</h3>
 							{error && <p>{error.message}</p>}
 							<PostsList posts={posts} />
