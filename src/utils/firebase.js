@@ -4,14 +4,18 @@ import { getAuth } from "firebase/auth";
 import { getFirestore, serverTimestamp } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: "AIzaSyAJKevkiUCpStF3Stbwb80rmhhSaTfJdQY",
-	authDomain: "school-forum-185ba.firebaseapp.com",
-	projectId: "school-forum-185ba",
-	storageBucket: "school-forum-185ba.appspot.com",
-	messagingSenderId: "881802332051",
-	appId: "1:881802332051:web:e0670b08302821220e4a66",
+	apiKey: "AIzaSyBkxiwyQQiG1vf5qc4M88yiATNB9dw80No",
+
+	authDomain: "school-forum-e6228.firebaseapp.com",
+
+	projectId: "school-forum-e6228",
+
+	storageBucket: "school-forum-e6228.appspot.com",
+
+	messagingSenderId: "14878543173",
+
+	appId: "1:14878543173:web:d94be52652f16a3882422c",
 };
 
 // Initialize Firebase

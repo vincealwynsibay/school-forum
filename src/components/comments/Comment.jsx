@@ -137,7 +137,7 @@ const Comment = ({ comment }) => {
 									) ? (
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 cursor-pointer hover:stroke-indigo-600'
+											className='h-6 w-6 mr-2 ease-in-out duration-300  cursor-pointer hover:stroke-indigo-600'
 											fill='none'
 											viewBox='0 0 24 24'
 											stroke='currentColor'
@@ -152,7 +152,7 @@ const Comment = ({ comment }) => {
 									) : (
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
+											className='h-6 w-6 mr-2 ease-in-out duration-300  cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
 											fill='none'
 											viewBox='0 0 24 24'
 											stroke='currentColor'

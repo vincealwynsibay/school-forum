@@ -11,29 +11,28 @@ const PostItem = ({ post }) => {
 	return (
 		<div>
 			<div className='max-w-full px-10 my-4 py-6 bg-white rounded-lg shadow-md'>
-				<div className='mt-2'>
-					<Link
-						className='text-2xl text-gray-700 font-bold hover:text-gray-600'
-						to={`/group/${post.group}/post/${post.id}`}
-					>
-						{post.title}
-					</Link>
+				<Link to={`/group/${post.group}/post/${post.id}`}>
+					<div className='mt-2'>
+						<p className='text-2xl text-gray-700 font-bold hover:text-gray-600'>
+							{post.title}
+						</p>
 
-					<p className='mt-2 text-gray-600 mb-7'>{`${post.content.substring(
-						0,
-						100
-					)}`}</p>
-				</div>
-				<div>
-					{post.photoURL && (
-						<img
-							className='max-w-sm max-h-sm'
-							src={post.photoURL}
-						/>
-					)}
-				</div>
+						<p className='mt-2 text-gray-600 mb-7'>
+							{`${post.content.substring(0, 100)}`}...
+						</p>
+					</div>
+					<div>
+						{post.photoURL && (
+							<img
+								className='max-w-sm max-h-sm'
+								src={post.photoURL}
+							/>
+						)}
+					</div>
+				</Link>
+
 				<div className='flex justify-between items-center '>
-					<div className=' flex items-center justify-between max-w-sm mt-6'>
+					<div className=' flex items-center justify-between mt-6'>
 						<Link
 							className='text-md text-gray-700 font-medium hover:text-gray-600  flex items-center'
 							to={`/group/${post.group}`}

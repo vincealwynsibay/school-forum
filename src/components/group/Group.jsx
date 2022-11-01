@@ -32,7 +32,7 @@ const Group = () => {
 	};
 
 	return (
-		<div class='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
 			{group ? (
 				<>
 					<div className='flex gap-8'>

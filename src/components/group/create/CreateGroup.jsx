@@ -56,7 +56,7 @@ const CreateGroup = () => {
 	};
 
 	return (
-		<div class='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
 			<h1 className='text-3xl font-medium mb-4'>Create Group</h1>
 			<form onSubmit={handleSubmit}>
 				<div>

@@ -98,7 +98,7 @@ const Post = () => {
 													auth.currentUser.uid
 											) ? (
 												<svg
-													className='h-10 w-10 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
+													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-indigo-500 hover:stroke-indigo-600'
 													xmlns='http://www.w3.org/2000/svg'
 													fill='none'
 													viewBox='0 0 24 24'
@@ -109,7 +109,7 @@ const Post = () => {
 												</svg>
 											) : (
 												<svg
-													className='h-10 w-10  cursor-pointer stroke-transparent fill-indigo-500 hover:fill-indigo-600'
+													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-transparent fill-indigo-500 hover:fill-indigo-600	'
 													xmlns='http://www.w3.org/2000/svg'
 													fill='none'
 													viewBox='0 0 24 24'
@@ -135,7 +135,7 @@ const Post = () => {
 													auth.currentUser.uid
 											) ? (
 												<svg
-													className='h-10 w-10 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
+													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-indigo-500 hover:stroke-indigo-600'
 													xmlns='http://www.w3.org/2000/svg'
 													fill='none'
 													viewBox='0 0 24 24'
@@ -146,7 +146,7 @@ const Post = () => {
 												</svg>
 											) : (
 												<svg
-													className='h-10 w-10 cursor-pointer stroke-transparent fill-indigo-500 hover:fill-indigo-600'
+													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-transparent fill-indigo-500 hover:fill-indigo-600'
 													xmlns='http://www.w3.org/2000/svg'
 													fill='none'
 													viewBox='0 0 24 24'
@@ -166,7 +166,7 @@ const Post = () => {
 							<div>
 								<div className='mb-9'>
 									<div className='flex justify-between items-center '>
-										<div className='flex items-center justify-between max-w-sm mt-6'>
+										<div className='flex items-center justify-between mt-6'>
 											<Link
 												className='text-md text-gray-700 font-medium hover:text-gray-600  flex items-center'
 												to={`/group/${post.group}`}
