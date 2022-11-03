@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
-import Spinner from "../layout/Spinner";
+import Spinner from "../spinner/Spinner";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
 

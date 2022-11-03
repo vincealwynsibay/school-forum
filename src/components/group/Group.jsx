@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import EditDescription from "./edit/EditDescription";
-import Spinner from "../layout/Spinner";
+import Spinner from "../spinner/Spinner";
 import Posts from "../posts/Posts";
 import ChangeAvatar from "./edit/ChangeAvatar";
 import toast from "react-hot-toast";

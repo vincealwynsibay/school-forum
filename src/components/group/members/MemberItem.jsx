@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDocument } from "../../../hooks/useDocument";
-import Spinner from "../../layout/Spinner";
+import Spinner from "../../spinner/Spinner";
 const FollowerItem = ({ memberId }) => {
 	const { document: member, isPending } = useDocument("users", memberId);
 

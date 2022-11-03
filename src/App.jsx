@@ -11,7 +11,7 @@ import { useAuthContext } from "./hooks/useAuthContext";
 // components
 import Login from "./components/auth/Login";
 import Signup from "./components/auth/Signup";
-import NavigationBar from "./components/layout/NavigationBar";
+import NavigationBar from "./components/navbar/NavigationBar";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import PrivateRoute from "./components/routing/PrivateRoute";
@@ -29,17 +29,76 @@ import CreatePost from "./components/post/create/CreatePost";
 import EditPost from "./components/post/edit/EditPost";
 import toast, { Toaster } from "react-hot-toast";
 
+import styled from "styled-components";
+
 import "./App.css";
+import Home from "./components/Home/Home";
+import SearchResults from "./components/search/SearchResults";
+import Search from "./components/search/Search";
+import Filter from "./components/filter/Filter";
+const Container = styled.div`
+	display: flex;
+	flex-direction: column-reverse;
+
+	@media (min-width: 481px) {
+		flex-direction: row;
+
+		> :nth-child(1) {
+			flex: 1 1 15%;
+		}
+		> :nth-child(2) {
+			flex: 1 1 85%;
+		}
+	}
+
+	@media (min-width: 768px) {
+		flex-direction: row;
+
+		> :nth-child(1) {
+			flex: 1 1 20%;
+		}
+		> :nth-child(2) {
+			flex: 1 1 80%;
+		}
+	}
+`;
+
+const SearchAndFilterContainer = styled.div`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+	width: 100%;
+	gap: 1rem;
+
+	padding: 0 2.5rem;
+	margin: 1rem 0;
+
+	> :nth-child(1) {
+	}
+	> :nth-child(2) {
+	}
+`;
+
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
+
 	return (
-		<div className='App'>
+		<Container>
 			{isAuthReady && (
 				<Router>
+					{/* Sidebar */}
 					<NavigationBar />
+					{/* Main Content */}
 					<div>
+						{/* Search And Filter */}
+						<SearchAndFilterContainer>
+							<Search />
+							<Filter list={["New", "Top"]} />
+						</SearchAndFilterContainer>
+
+						{/* Content */}
 						<Routes>
-							<Route exact path='/' element={<Posts />} />
+							<Route exact path='/' element={<Home />} />
 							Auth
 							<Route
 								path='login'
@@ -81,6 +140,8 @@ const App = () => {
 								path='/group/:group_id/post/:post_id'
 								element={<Post />}
 							/>
+							{/* Search */}
+							<Route path='/search' element={<SearchResults />} />
 							{/* PRIVATE ROUTES */}
 							{/* Profile */}
 							<Route
@@ -116,7 +177,7 @@ const App = () => {
 					<Toaster />
 				</Router>
 			)}
-		</div>
+		</Container>
 	);
 };
 

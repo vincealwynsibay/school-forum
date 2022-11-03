@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDocument } from "../../../hooks/useDocument";
-import Spinner from "../../layout/Spinner";
+import Spinner from "../../spinner/Spinner";
 import FollowerItem from "./FollowerItem";
 
 const Followers = () => {

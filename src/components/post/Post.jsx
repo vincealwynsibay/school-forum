@@ -10,7 +10,7 @@ import { Link, useParams } from "react-router-dom";
 import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import Comments from "../comments/Comments";
-import Spinner from "../layout/Spinner";
+import Spinner from "../spinner/Spinner";
 import { useNavigate } from "react-router-dom";
 
 const Post = () => {

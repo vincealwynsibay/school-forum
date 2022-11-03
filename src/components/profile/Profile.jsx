@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
-import Spinner from "../layout/Spinner";
+import Spinner from "../spinner/Spinner";
 import { Link } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import { useCollection } from "../../hooks/useCollection";
@@ -13,9 +13,7 @@ const Profile = () => {
 	const { id } = useParams();
 	const { document, error, isPending } = useDocument("users", id);
 	const { documents: posts, isPending2 } = useCollection("posts", [
-		"author",
-		"==",
-		id,
+		["author", "==", id],
 	]);
 
 	const profileRef = doc(db, "users", id);

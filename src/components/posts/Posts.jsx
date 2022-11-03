@@ -16,7 +16,7 @@ const Posts = () => {
 	const { id } = useParams();
 	const { documents, error } = useCollection(
 		"posts",
-		id ? ["group", "==", id] : null,
+		id ? [["group", "==", id]] : null,
 		["created_at", "desc"]
 	);
 

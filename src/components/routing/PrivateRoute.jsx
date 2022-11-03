@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Spinner from "../layout/Spinner";
+import Spinner from "../spinner/Spinner";
 
 const PrivateRoute = ({ Component }) => {
 	const { isAuthReady, user } = useAuthContext();
