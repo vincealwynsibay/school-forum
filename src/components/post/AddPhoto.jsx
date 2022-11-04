@@ -3,6 +3,29 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useUploadFile from "../../hooks/useUploadFile";
 import { db, storage } from "../../utils/firebase";
+import { FiUpload } from "react-icons/fi";
+
+import styled from "styled-components";
+
+const File = styled.label`
+	border: 1px solid #1c3d52;
+	display: inline-block;
+	padding: 0.7rem 1.5rem;
+	cursor: pointer;
+
+	> div {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		> svg {
+			transform: scale(1.3);
+		}
+	}
+
+	> input {
+		display: none;
+	}
+`;
 
 const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 	const [photo, setPhoto] = useState(null);
@@ -43,16 +66,18 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 	return (
 		<div>
 			<img src={post_photo && post_photo} />
-			<input
-				type='file'
-				name='avatar'
-				onChange={handleFileChange}
-				className='file:mr-4 file:py-2 file:px-4
-      file:rounded-full file:border-0
-      file:text-sm file:font-semibold
-      file:bg-violet-50 file:text-violet-700
-      hover:file:bg-violet-100'
-			/>
+			<File>
+				<div>
+					<FiUpload />
+					Upload File
+				</div>
+				<input
+					type='file'
+					name='avatar'
+					onChange={handleFileChange}
+					className=''
+				/>
+			</File>
 			{uploading && <p>Uploading</p>}
 		</div>
 	);

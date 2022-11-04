@@ -10,7 +10,13 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../hooks/useCollection";
 import { db, timestamp } from "../../utils/firebase";
+import Wrapper from "../layout/Wrapper";
 import PostsList from "./PostsList";
+import styled from "styled-components";
+
+const Container = styled.div`
+	padding-top: 2rem;
+`;
 
 const Posts = () => {
 	const { id } = useParams();
@@ -22,21 +28,23 @@ const Posts = () => {
 
 	if (!id) {
 		return (
-			<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
-				<div className='flex justify-between items-center mb-4'></div>
-				{error && <p>{error.message}</p>}
-				<PostsList posts={documents} />
-			</div>
+			<Wrapper>
+				<Container className=''>
+					<div className=''></div>
+					{error && <p>{error.message}</p>}
+					<PostsList posts={documents} />
+				</Container>
+			</Wrapper>
 		);
 	}
 
 	return (
-		<div>
-			<div className=''>
+		<Wrapper>
+			<Container className=''>
 				{error && <p>{error.message}</p>}
 				<PostsList posts={documents} />
-			</div>
-		</div>
+			</Container>
+		</Wrapper>
 	);
 };
 

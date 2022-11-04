@@ -32,10 +32,12 @@ import toast, { Toaster } from "react-hot-toast";
 import styled from "styled-components";
 
 import "./App.css";
-import Home from "./components/Home/Home";
+import Home from "./components/home/Home";
 import SearchResults from "./components/search/SearchResults";
 import Search from "./components/search/Search";
 import Filter from "./components/filter/Filter";
+import Wrapper from "./components/layout/Wrapper";
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: column-reverse;
@@ -70,9 +72,6 @@ const SearchAndFilterContainer = styled.div`
 	width: 100%;
 	gap: 1rem;
 
-	padding: 0 2.5rem;
-	margin: 1rem 0;
-
 	> :nth-child(1) {
 	}
 	> :nth-child(2) {
@@ -91,10 +90,12 @@ const App = () => {
 					{/* Main Content */}
 					<div>
 						{/* Search And Filter */}
-						<SearchAndFilterContainer>
-							<Search />
-							<Filter list={["New", "Top"]} />
-						</SearchAndFilterContainer>
+						<Wrapper>
+							<SearchAndFilterContainer>
+								<Search />
+								<Filter list={["New", "Top"]} />
+							</SearchAndFilterContainer>
+						</Wrapper>
 
 						{/* Content */}
 						<Routes>
@@ -165,6 +166,10 @@ const App = () => {
 							{/* Post */}
 							<Route
 								path='/group/:group_id/post/create'
+								element={<CreatePost />}
+							/>
+							<Route
+								path='/posts/create'
 								element={<CreatePost />}
 							/>
 							{/* Post */}
