@@ -13,7 +13,51 @@ import { auth, db } from "../../utils/firebase";
 import CreateReply from "./reply/CreateReply";
 import Reply from "./reply/Reply";
 import Replies from "./reply/Replies";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
+
+const Container = styled.div`
+	padding: 1rem;
+	border: 1px solid #000;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	border-radius: 3px;
+`;
+
+const DetailsContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const VoteContainer = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+
+	> div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		> svg {
+			width: 1.3rem;
+		}
+	}
+`;
+const AvatarContainer = styled.div`
+	> a {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	& img {
+		border-radius: 50%;
+		width: 1.7rem;
+	}
+`;
 
 const Comment = ({ comment }) => {
 	const { document: commentUser } = useDocument("users", comment.user);
@@ -75,119 +119,100 @@ const Comment = ({ comment }) => {
 	};
 
 	return (
-		<div>
-			<div>
-				<div className='max-w-full px-10 my-4 pt-6 pb-3 bg-white rounded-lg shadow-md'>
-					<div className='mt-2'>
-						<p className='mt-2 text-gray-600'>{comment.content}</p>
-					</div>
-
-					<div className='flex justify-between items-center mt-6'>
-						<div className='flex gap-2'>
-							{auth.currentUser && (
-								<div
-									className='font-medium text-xs flex items-center '
-									onClick={upvote}
-								>
-									{!comment.upvotes.some(
-										(upvote) =>
-											upvote === auth.currentUser.uid
-									) ? (
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 cursor-pointer hover:stroke-indigo-600'
-											fill='none'
-											viewBox='0 0 24 24'
-											stroke='currentColor'
-											strokeWidth={2}
-										>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												d='M5 15l7-7 7 7'
-											/>
-										</svg>
-									) : (
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
-											fill='none'
-											viewBox='0 0 24 24'
-											stroke='currentColor'
-											strokeWidth={2}
-										>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												d='M5 15l7-7 7 7'
-											/>
-										</svg>
-									)}
-									<span>{comment.upvotes.length}</span>
-								</div>
-							)}
-							{auth.currentUser && (
-								<div
-									className='font-medium text-xs flex items-center'
-									onClick={downvote}
-								>
-									{!comment.downvotes.some(
-										(downvote) =>
-											downvote === auth.currentUser.uid
-									) ? (
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 ease-in-out duration-300  cursor-pointer hover:stroke-indigo-600'
-											fill='none'
-											viewBox='0 0 24 24'
-											stroke='currentColor'
-											strokeWidth={2}
-										>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												d='M19 9l-7 7-7-7'
-											/>
-										</svg>
-									) : (
-										<svg
-											xmlns='http://www.w3.org/2000/svg'
-											className='h-6 w-6 mr-2 ease-in-out duration-300  cursor-pointer stroke-indigo-500 hover:stroke-indigo-600'
-											fill='none'
-											viewBox='0 0 24 24'
-											stroke='currentColor'
-											strokeWidth={2}
-										>
-											<path
-												strokeLinecap='round'
-												strokeLinejoin='round'
-												d='M19 9l-7 7-7-7'
-											/>
-										</svg>
-									)}
-									<span>{comment.downvotes.length}</span>
-								</div>
-							)}
-						</div>
-						<div>
-							<Link
-								className='flex items-center'
-								to={`/profile/${commentUser.id}`}
-							>
-								<img
-									className='mx-4 w-10 h-10 object-cover rounded-full hidden sm:block'
-									src={commentUser && commentUser.photoURL}
-									alt='avatar'
-								/>
-								<h1 className='text-gray-700 font-bold'>
-									{commentUser && commentUser.displayName}
-								</h1>
-							</Link>
-						</div>
-					</div>
-				</div>
+		<Container>
+			<div className=''>
+				<p>{comment.content}</p>
 			</div>
-		</div>
+
+			<DetailsContainer>
+				<VoteContainer>
+					{auth.currentUser && (
+						<div onClick={upvote}>
+							{!comment.upvotes.some(
+								(upvote) => upvote === auth.currentUser.uid
+							) ? (
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									stroke='currentColor'
+									strokeWidth={2}
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M5 15l7-7 7 7'
+									/>
+								</svg>
+							) : (
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									stroke='currentColor'
+									strokeWidth={2}
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M5 15l7-7 7 7'
+									/>
+								</svg>
+							)}
+							<p>{comment.upvotes.length}</p>
+						</div>
+					)}
+					{auth.currentUser && (
+						<div onClick={downvote}>
+							{!comment.downvotes.some(
+								(downvote) => downvote === auth.currentUser.uid
+							) ? (
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									stroke='currentColor'
+									strokeWidth={2}
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M19 9l-7 7-7-7'
+									/>
+								</svg>
+							) : (
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									fill='none'
+									viewBox='0 0 24 24'
+									stroke='currentColor'
+									strokeWidth={2}
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										d='M19 9l-7 7-7-7'
+									/>
+								</svg>
+							)}
+							<p>{comment.downvotes.length}</p>
+						</div>
+					)}
+				</VoteContainer>
+				<AvatarContainer>
+					<Link
+						className='flex items-center'
+						to={`/profile/${commentUser.id}`}
+					>
+						<img
+							src={commentUser && commentUser.photoURL}
+							alt='avatar'
+						/>
+						<p>{commentUser && commentUser.displayName}</p>
+					</Link>
+				</AvatarContainer>
+			</DetailsContainer>
+		</Container>
 	);
 };
 

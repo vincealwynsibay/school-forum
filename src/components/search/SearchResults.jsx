@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useCollection } from "../../hooks/useCollection";
 import { useQuery } from "../../hooks/useQuery";
+import Wrapper from "../layout/Wrapper";
+import styled from "styled-components";
+import PostsList from "../posts/PostsList";
+
+const Header = styled.h2`
+	font-size: 1.6rem;
+	margin-bottom: 2rem;
+`;
+
+const Container = styled.div``;
 
 function SearchResults() {
 	let searchQuery = useQuery();
-	const queryText = searchQuery.get("query") || "";
+	const [queryText, setQueryText] = useState(searchQuery.get("query") || "");
+
+	useEffect(() => {
+		setQueryText(searchQuery.get("query"));
+	}, [searchQuery]);
 
 	const { documents: posts } = useCollection("posts", [
 		["title", ">=", queryText],
@@ -14,29 +28,24 @@ function SearchResults() {
 		["name", ">=", queryText],
 		["name", "<=", queryText + "\uf8ff"],
 	]);
-
 	console.log(posts);
-	console.log(groups);
 
 	return (
-		<div>
-			<div>
-				<h2>Posts</h2>
-				{posts &&
-					posts.map((post) => (
-						<div key={post.created_at.seconds}>{post.title}</div>
-					))}
-			</div>
-			<div>
-				<h2>Groups</h2>
+		<Wrapper>
+			<Container>
+				<Header>Posts</Header>
+				<PostsList posts={posts} />
+			</Container>
+			{/* <div>
+				<Header>Groups</Header>
 				{groups &&
 					groups.map((group) => (
 						<div key={group.name + group.description}>
 							{group.name}
 						</div>
 					))}
-			</div>
-		</div>
+			</div> */}
+		</Wrapper>
 	);
 }
 

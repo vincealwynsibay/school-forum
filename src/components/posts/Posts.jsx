@@ -18,8 +18,13 @@ const Container = styled.div`
 	padding-top: 2rem;
 `;
 
-const Posts = () => {
+const Posts = ({ filter }) => {
 	const { id } = useParams();
+	// const filterArr =
+	// 	filter && filter.toLowerCase() === "new"
+	// 		?
+	// 		: ["desc"];
+
 	const { documents, error } = useCollection(
 		"posts",
 		id ? [["group", "==", id]] : null,

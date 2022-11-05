@@ -17,6 +17,7 @@ export const useCollection = (c, _q, _o) => {
 	const o = useRef(_o).current;
 
 	useEffect(() => {
+		console.log("q", q);
 		let ref = collection(db, c);
 
 		if (q) {
@@ -51,7 +52,7 @@ export const useCollection = (c, _q, _o) => {
 
 		// unsubscribe on unmount
 		return () => unsubscribe();
-	}, [collection, query, orderBy]);
+	}, [c, q, o]);
 
 	return { documents, error };
 };

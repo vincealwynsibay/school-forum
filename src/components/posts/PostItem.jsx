@@ -17,7 +17,7 @@ const Container = styled.div`
 const TopDetails = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 0.325rem;
 	color: #595959;
 	font-size: 0.9rem;
 `;
@@ -171,7 +171,9 @@ const PostItem = ({ post }) => {
 						{/* Comments */}
 						<CommentDetails className=''>
 							<BiCommentDetail />
-							<p className=''>{comments.length} Comments</p>
+							<p className=''>
+								{comments && comments.length} Comments
+							</p>
 						</CommentDetails>
 					</BottomDetails>
 				</Link>

@@ -33,9 +33,8 @@ const Avatar = styled.img`
 
 const AvatarContainer = styled.div``;
 
-function Home() {
+function Home({ filter }) {
 	const { user } = useAuthContext();
-	console.log(user.photoURL);
 	return (
 		<div>
 			<Wrapper>
@@ -50,7 +49,7 @@ function Home() {
 					</CreatePostContainer>
 				)}
 			</Wrapper>
-			<Posts />
+			<Posts filter={filter} />
 		</div>
 	);
 }

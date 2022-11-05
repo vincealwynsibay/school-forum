@@ -11,13 +11,138 @@ import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import Comments from "../comments/Comments";
 import Spinner from "../spinner/Spinner";
+import Wrapper from "../layout/Wrapper";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import {
+	MdOutlineModeEditOutline,
+	MdDeleteOutline,
+	MdOutlineInsertComment,
+} from "react-icons/md";
+import { useCollection } from "../../hooks/useCollection";
+
+const Container = styled.div`
+	margin-top: 2rem;
+	border: 1px solid #737373;
+	padding: 2rem 0;
+	border-radius: 3px;
+	display: flex;
+	flex-direction: column;
+`;
+
+const PostView = styled.div`
+	display: flex;
+`;
+
+const TopDetails = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	color: #595959;
+	font-size: 1rem;
+`;
+
+const GroupAvatar = styled.img`
+	width: 100%;
+	border-radius: 50%;
+	width: 1.7rem;
+`;
+
+const GroupDetails = styled.div`
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	color: #262626;
+`;
+
+const Content = styled.div`
+	margin: 1.5rem 0 2rem 0;
+
+	> h2 {
+		font-size: 1.6rem;
+		font-weight: 600;
+	}
+
+	> p {
+		font-size: 1.2rem;
+	}
+`;
+
+const VotesContainer = styled.div`
+	text-align: center;
+	padding: 0 0.7rem;
+
+	> * {
+		display: block;
+	}
+
+	& svg {
+		cursor: pointer;
+		width: 2.2rem;
+		stroke: #1c3d52;
+		fill: #fff;
+		transition: all 0.1s ease-in-out;
+	}
+	& svg.active {
+		stroke: #1c3d52;
+		fill: #1c3d52;
+	}
+
+	& svg:hover {
+		stroke: #1c3d52;
+		fill: #1c3d52;
+	}
+
+	@media (min-width: 768px) {
+		& svg {
+			width: 2.7rem;
+		}
+	}
+`;
+
+const BottomDetails = styled.div`
+	display: flex;
+	align-items: center;
+	gap: 1.2rem;
+	color: #595959;
+	font-size: 1rem;
+
+	& svg {
+		transform: scale(1.5);
+	}
+
+	& p {
+		display: none;
+	}
+
+	@media (min-width: 768px) {
+		& p {
+			display: block;
+		}
+		& a {
+			display: flex;
+			align-items: center;
+			gap: 0.7rem;
+		}
+	}
+`;
+
+const CommentDetails = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.7rem;
+`;
 
 const Post = () => {
 	const { group_id, post_id } = useParams();
 	const { document: post, error, isPending } = useDocument("posts", post_id);
 	const { document: author } = useDocument("users", post && post.author);
 	const { document: group } = useDocument("groups", post && post.group);
+	const { documents: comments } = useCollection("comments", [
+		["post", "==", post_id],
+	]);
+
 	const postRef = doc(db, "posts", post_id);
 	const navigate = useNavigate();
 	if (isPending) {
@@ -77,171 +202,166 @@ const Post = () => {
 	};
 
 	return (
-		<div
-			className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40
-		'
-		>
+		<Wrapper>
 			{post ? (
 				<div>
-					<div className='max-w-full px-10 my-4 py-6 bg-white rounded-lg shadow-md'>
-						<div className='flex gap-6'>
-							{auth.currentUser && (
-								<div className='flex flex-col gap-2 my-6'>
-									{
-										<div
-											className='font-medium text-xs flex items-center'
-											onClick={upvote}
-										>
-											{!post.upvotes.some(
-												(upvote) =>
-													upvote ===
-													auth.currentUser.uid
-											) ? (
-												<svg
-													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-indigo-500 hover:stroke-indigo-600'
-													xmlns='http://www.w3.org/2000/svg'
-													fill='none'
-													viewBox='0 0 24 24'
-													stroke='currentColor'
-													strokeWidth='1'
-												>
-													<path d='M8 0.5l-7.5 7.5h4.5v8h6v-8h4.5z'></path>
-												</svg>
-											) : (
-												<svg
-													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-transparent fill-indigo-500 hover:fill-indigo-600	'
-													xmlns='http://www.w3.org/2000/svg'
-													fill='none'
-													viewBox='0 0 24 24'
-													stroke='currentColor'
-													strokeWidth='1'
-												>
-													<path d='M8 0.5l-7.5 7.5h4.5v8h6v-8h4.5z'></path>
-												</svg>
-											)}
-											<span className='font-semibold'>
-												{post.upvotes.length}
-											</span>
-										</div>
-									}
-									{
-										<div
-											className='font-medium text-xs flex items-center'
-											onClick={downvote}
-										>
-											{!post.downvotes.some(
-												(downvote) =>
-													downvote ===
-													auth.currentUser.uid
-											) ? (
-												<svg
-													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-indigo-500 hover:stroke-indigo-600'
-													xmlns='http://www.w3.org/2000/svg'
-													fill='none'
-													viewBox='0 0 24 24'
-													stroke='currentColor'
-													strokeWidth='1'
-												>
-													<path d='M8 15.5l7.5-7.5h-4.5v-8h-6v8h-4.5z'></path>
-												</svg>
-											) : (
-												<svg
-													className='h-10 w-10 cursor-pointer ease-in-out duration-300  stroke-transparent fill-indigo-500 hover:fill-indigo-600'
-													xmlns='http://www.w3.org/2000/svg'
-													fill='none'
-													viewBox='0 0 24 24'
-													stroke='currentColor'
-													strokeWidth='1'
-												>
-													<path d='M8 15.5l7.5-7.5h-4.5v-8h-6v8h-4.5z'></path>
-												</svg>
-											)}
-											<span className='font-semibold'>
-												{post.downvotes.length}
-											</span>
-										</div>
-									}
-								</div>
-							)}
-							<div>
-								<div className='mb-9'>
-									<div className='flex justify-between items-center '>
-										<div className='flex items-center justify-between mt-6'>
-											<Link
-												className='text-md text-gray-700 font-medium hover:text-gray-600  flex items-center'
-												to={`/group/${post.group}`}
-											>
-												<img
-													className='mr-4 w-8 h-8 object-cover rounded-full hidden sm:block'
+					<div>
+						<Container>
+							<PostView>
+								{/* Votes */}
+								{auth.currentUser && (
+									<VotesContainer className=''>
+										{
+											<div onClick={upvote}>
+												{!post.upvotes.some(
+													(upvote) =>
+														upvote ===
+														auth.currentUser.uid
+												) ? (
+													<svg
+														clipRule='evenodd'
+														fillRule='evenodd'
+														strokeLinejoin='round'
+														strokeMiterlimit='2'
+														viewBox='0 0 24 24'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='m9.001 10.978h-3.251c-.412 0-.75-.335-.75-.752 0-.188.071-.375.206-.518 1.685-1.775 4.692-4.945 6.069-6.396.189-.2.452-.312.725-.312.274 0 .536.112.725.312 1.377 1.451 4.385 4.621 6.068 6.396.136.143.207.33.207.518 0 .417-.337.752-.75.752h-3.251v9.02c0 .531-.47 1.002-1 1.002h-3.998c-.53 0-1-.471-1-1.002z'
+															fillRule='nonzero'
+														/>
+													</svg>
+												) : (
+													<svg
+														clipRule='evenodd'
+														fillRule='evenodd'
+														strokeLinejoin='round'
+														strokeMiterlimit='2'
+														viewBox='0 0 24 24'
+														xmlns='http://www.w3.org/2000/svg'
+														className='active'
+													>
+														<path
+															d='m9.001 10.978h-3.251c-.412 0-.75-.335-.75-.752 0-.188.071-.375.206-.518 1.685-1.775 4.692-4.945 6.069-6.396.189-.2.452-.312.725-.312.274 0 .536.112.725.312 1.377 1.451 4.385 4.621 6.068 6.396.136.143.207.33.207.518 0 .417-.337.752-.75.752h-3.251v9.02c0 .531-.47 1.002-1 1.002h-3.998c-.53 0-1-.471-1-1.002z'
+															fillRule='nonzero'
+														/>
+													</svg>
+												)}
+												<span className=''>
+													{post.upvotes.length}
+												</span>
+											</div>
+										}
+										{
+											<div onClick={downvote}>
+												{!post.downvotes.some(
+													(downvote) =>
+														downvote ===
+														auth.currentUser.uid
+												) ? (
+													<svg
+														clipRule='evenodd'
+														fillRule='evenodd'
+														strokeLinejoin='round'
+														strokeMiterlimit='2'
+														viewBox='0 0 24 24'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='m9.001 13.022h-3.251c-.412 0-.75.335-.75.752 0 .188.071.375.206.518 1.685 1.775 4.692 4.945 6.069 6.396.189.2.452.312.725.312.274 0 .536-.112.725-.312 1.377-1.451 4.385-4.621 6.068-6.396.136-.143.207-.33.207-.518 0-.417-.337-.752-.75-.752h-3.251v-9.02c0-.531-.47-1.002-1-1.002h-3.998c-.53 0-1 .471-1 1.002z'
+															fillRule='nonzero'
+														/>
+													</svg>
+												) : (
+													<svg
+														clipRule='evenodd'
+														fillRule='evenodd'
+														className='active'
+														strokeLinejoin='round'
+														strokeMiterlimit='2'
+														viewBox='0 0 24 24'
+														xmlns='http://www.w3.org/2000/svg'
+													>
+														<path
+															d='m9.001 13.022h-3.251c-.412 0-.75.335-.75.752 0 .188.071.375.206.518 1.685 1.775 4.692 4.945 6.069 6.396.189.2.452.312.725.312.274 0 .536-.112.725-.312 1.377-1.451 4.385-4.621 6.068-6.396.136-.143.207-.33.207-.518 0-.417-.337-.752-.75-.752h-3.251v-9.02c0-.531-.47-1.002-1-1.002h-3.998c-.53 0-1 .471-1 1.002z'
+															fillRule='nonzero'
+														/>
+													</svg>
+												)}
+												<span>
+													{post.downvotes.length}
+												</span>
+											</div>
+										}
+									</VotesContainer>
+								)}
+								<div>
+									<TopDetails>
+										<Link to={`/group/${post.group}`}>
+											<GroupDetails>
+												<GroupAvatar
 													src={
 														group && group.photoURL
 													}
 													alt='avatar'
 												/>
-												<h1 className='text-gray-700 font-bold'>
-													{group && group.name}
-												</h1>
-											</Link>
-											<p className='mx-1'> posted by </p>
-											<Link
-												className='flex items-center'
-												to={`/profile/${author.id}`}
-											>
-												<h1 className='text-gray-700 font-bold'>
-													{author &&
-														author.displayName}
-												</h1>
-											</Link>
-										</div>
-									</div>
-									<h3 className='text-3xl leading-normal font-bold text-gray-900 mt-7 mb-5'>
-										{post.title}
-									</h3>
-								</div>
-								<div>
-									{" "}
-									{auth.currentUser &&
-										auth.currentUser.uid ===
-											post.author && (
-											<Link
-												to={`/group/${post.group}/post/${post.id}/edit`}
-												className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-											>
-												Edit Post
-											</Link>
-										)}
-									{auth.currentUser &&
-										auth.currentUser.uid ===
-											post.author && (
-											<a
-												onClick={deletePost}
-												href='#'
-												className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500  sm:w-auto sm:text-sm'
-											>
-												Delete Post
-											</a>
-										)}
-								</div>
+												<p>{group && group.name}</p>
+											</GroupDetails>
+										</Link>
+										<span>•</span>
+										<p> posted by </p>
+										<Link to={`/profile/${author.id}`}>
+											<h1>
+												{author && author.displayName}
+											</h1>
+										</Link>
+									</TopDetails>
+									<Content>
+										<h2>{post.title}</h2>
+										<p>{post.content}</p>
+									</Content>
 
-								<div className='mb-5'>
-									<p className='text-[1.2rem] mb-7 leading-normal'>
-										{post.content}
-									</p>
-
-									<img
-										src={post.photoURL}
-										className='max-w-md max-h-md'
-									/>
+									<BottomDetails>
+										{/* Comments */}
+										<CommentDetails className=''>
+											<MdOutlineInsertComment />
+											<p className=''>
+												{comments && comments.length}{" "}
+												Comments
+											</p>
+										</CommentDetails>
+										{auth.currentUser &&
+											auth.currentUser.uid ===
+												post.author && (
+												<Link
+													to={`/group/${post.group}/post/${post.id}/edit`}
+												>
+													<MdOutlineModeEditOutline />
+													<p>Edit Post</p>
+												</Link>
+											)}
+										{auth.currentUser &&
+											auth.currentUser.uid ===
+												post.author && (
+												<a
+													onClick={deletePost}
+													href='#'
+												>
+													<MdDeleteOutline />
+													<p>Delete Post</p>
+												</a>
+											)}
+									</BottomDetails>
 								</div>
-							</div>
-						</div>
+							</PostView>
+						</Container>
 					</div>
 					<Comments />
 				</div>
 			) : (
 				<p>document does not exist</p>
 			)}
-		</div>
+		</Wrapper>
 	);
 };
 

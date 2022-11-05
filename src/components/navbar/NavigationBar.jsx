@@ -38,6 +38,7 @@ const NavLinks = styled.div`
 const NavIcons = styled.div`
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -52,9 +53,10 @@ const NavIcons = styled.div`
 
 	@media (min-width: 481px) {
 		position: static;
+		width: 100%;
 		flex-direction: column;
 		align-items: center;
-		padding: 0 2rem;
+		padding: 0 1rem;
 		height: 100vh;
 
 		right: initial;

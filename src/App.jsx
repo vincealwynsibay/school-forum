@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -80,7 +80,7 @@ const SearchAndFilterContainer = styled.div`
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
-
+	const [filter, setFilter] = useState(null);
 	return (
 		<Container>
 			{isAuthReady && (
@@ -93,13 +93,20 @@ const App = () => {
 						<Wrapper>
 							<SearchAndFilterContainer>
 								<Search />
-								<Filter list={["New", "Top"]} />
+								<Filter
+									list={["New", "Top"]}
+									setFilter={setFilter}
+								/>
 							</SearchAndFilterContainer>
 						</Wrapper>
 
 						{/* Content */}
 						<Routes>
-							<Route exact path='/' element={<Home />} />
+							<Route
+								exact
+								path='/'
+								element={<Home filter={filter} />}
+							/>
 							Auth
 							<Route
 								path='login'
@@ -125,7 +132,11 @@ const App = () => {
 							/>
 							{/* Groups */}
 							<Route path='/groups' element={<Groups />} />
-							<Route path='/posts' element={<Posts />} />
+							<Route
+								path='/posts'
+								filter={filter}
+								element={<Posts />}
+							/>
 							<Route path='/group/:id' element={<Group />} />
 							{/* Group Members */}
 							<Route
