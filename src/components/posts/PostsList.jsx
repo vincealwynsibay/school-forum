@@ -6,6 +6,7 @@ const List = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
+	margin-top: 2rem;
 `;
 
 const PostsList = ({ posts }) => {

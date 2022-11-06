@@ -53,14 +53,17 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 		}
 
 		// Save Photo and get Url
-		const storageRef = ref(storage, `posts/${post_id}/${selected.name}`);
+		const storageRef = ref(storage, `posts/${selected.name}`);
 
 		await uploadFile(storageRef, selected);
-		const url = await getDownloadURL(
-			ref(storage, `posts/${post_id}/${selected.name}`)
-		);
+		// const url = await getDownloadURL(
+		// 	ref(storage, `posts/${selected.name}`)
+		// );
+
+		getDownloadURL(storageRef).then((url) => {
+			handlePhotoChange(url);
+		});
 		setPhoto(selected);
-		handlePhotoChange(url);
 	};
 
 	return (

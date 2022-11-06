@@ -19,7 +19,9 @@ const Container = styled.div`
 const Comments = () => {
 	const { post_id } = useParams();
 	const { documents, error } = useCollection("comments", [
-		["post", "==", post_id],
+		"post",
+		"==",
+		post_id,
 	]);
 
 	const handleNewComment = async (content) => {

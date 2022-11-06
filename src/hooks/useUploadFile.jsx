@@ -1,4 +1,4 @@
-import { getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 
 const useUploadFile = () => {
@@ -7,10 +7,11 @@ const useUploadFile = () => {
 	const [uploading, setUploading] = useState(false);
 
 	const uploadFile = async (storageRef, file) => {
-		return new Promise((resolve, reject) => {
+		return new Promise(async (resolve, reject) => {
 			setUploading(true);
 			setError(undefined);
 			const uploadTask = uploadBytesResumable(storageRef, file);
+
 			uploadTask.on(
 				"state_changed",
 				(snapshot) => {

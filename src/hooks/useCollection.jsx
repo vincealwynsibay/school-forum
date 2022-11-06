@@ -17,18 +17,11 @@ export const useCollection = (c, _q, _o) => {
 	const o = useRef(_o).current;
 
 	useEffect(() => {
-		console.log("q", q);
 		let ref = collection(db, c);
-
 		if (q) {
-			for (let i = 0; i < q.length; i++) {}
-
-			if (q.length == 2) {
-				ref = query(ref, where(...q[0]), where(...q[1]));
-			} else {
-				ref = query(ref, where(...q[0]));
-			}
+			ref = query(ref, where(...q));
 		}
+
 		if (o) {
 			ref = query(ref, orderBy(...o));
 		}
@@ -52,7 +45,7 @@ export const useCollection = (c, _q, _o) => {
 
 		// unsubscribe on unmount
 		return () => unsubscribe();
-	}, [c, q, o]);
+	}, [c, query, orderBy]);
 
 	return { documents, error };
 };

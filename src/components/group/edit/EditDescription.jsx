@@ -2,6 +2,83 @@ import { doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { db } from "../../../utils/firebase";
+import styled from "styled-components";
+
+const Button = styled.button`
+	padding: 0.8rem 1.5rem;
+	background-color: #1c3d52;
+	color: white;
+`;
+
+const Container = styled.div`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	padding: 2rem 4rem;
+	z-index: 3;
+
+	> h1 {
+		font-size: 2rem;
+		text-align: left;
+		margin-bottom: 2rem;
+	}
+`;
+
+const Overlay = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 2;
+`;
+
+const Form = styled.form`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 1rem;
+
+	> input {
+		padding: 1rem 1.5rem;
+		width: 15rem;
+	}
+
+	> div {
+		display: flex;
+		justify-content: flex-end;
+		gap: 1rem;
+
+		> button {
+			border-radius: 3px;
+			background-color: #1c3d52;
+			margin-top: 1rem;
+			padding: 0.8rem;
+			color: white;
+			font-weight: 600;
+			font-size: 0.8rem;
+		}
+		> input {
+			border-radius: 3px;
+			background-color: #1c3d52;
+			margin-top: 1rem;
+			padding: 0.8rem;
+			color: white;
+			font-weight: 600;
+			font-size: 0.8rem;
+		}
+	}
+`;
+
+const InputButton = styled.input`
+	padding: 0.8rem 1.5rem;
+	background-color: #1c3d52;
+	color: white;
+	cursor: pointer;
+`;
 
 const EditDescription = ({ id, descriptionValue }) => {
 	const [show, setShow] = useState(false);
@@ -17,20 +94,13 @@ const EditDescription = ({ id, descriptionValue }) => {
 
 	return (
 		<div>
-			{!show ? (
-				<div>
-					{" "}
-					<button
-						onClick={() => setShow(true)}
-						className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-					>
-						Edit Description
-					</button>
-				</div>
-			) : (
-				<div>
-					<form onSubmit={handleSubmit}>
-						<div>
+			<Button onClick={() => setShow(true)}>Edit Description</Button>
+			{show && (
+				<>
+					<Overlay onClick={() => setShow(false)} />
+					<Container>
+						<h1>Edit Description</h1>
+						<Form onSubmit={handleSubmit}>
 							<input
 								type='text'
 								name='description'
@@ -38,22 +108,17 @@ const EditDescription = ({ id, descriptionValue }) => {
 								value={description}
 								onChange={(e) => setDescription(e.target.value)}
 							/>
-						</div>
-						<div>
-							<input
-								type='submit'
-								value='Save Changes'
-								className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-							/>
-							<input
-								type='button'
-								value='Cancel'
-								className='cursor-pointer mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
-								onClick={() => setShow(false)}
-							/>
-						</div>
-					</form>
-				</div>
+							<div>
+								<Button type='submit'>Save Changes</Button>
+								<InputButton
+									type='button'
+									value='Cancel'
+									onClick={() => setShow(false)}
+								/>
+							</div>
+						</Form>
+					</Container>
+				</>
 			)}
 		</div>
 	);

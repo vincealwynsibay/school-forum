@@ -86,7 +86,9 @@ const CreatePost = () => {
 
 	// fetch joined groups
 	const { documents: groups } = useCollection("groups", [
-		["members", "array-contains", user.uid],
+		"members",
+		"array-contains",
+		user.uid,
 	]);
 
 	const { title, content, photo } = formData;

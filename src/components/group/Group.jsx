@@ -8,10 +8,88 @@ import Spinner from "../spinner/Spinner";
 import Posts from "../posts/Posts";
 import ChangeAvatar from "./edit/ChangeAvatar";
 import toast from "react-hot-toast";
+import Wrapper from "../layout/Wrapper";
+import styled from "styled-components";
+import PostsList from "../posts/PostsList";
+import { useCollection } from "../../hooks/useCollection";
+
+const TopContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	margin-top: 2rem;
+	gap: 1rem;
+	border: 1px solid #737373;
+	padding: 1rem;
+
+	> :last-child {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		text-align: right;
+	}
+`;
+
+const GroupDetails = styled.div`
+	display: flex;
+	gap: 1rem;
+	& h2 {
+		font-size: 2rem;
+		font-weight: 700;
+	}
+
+	> :first-child {
+		width: 5rem;
+	}
+
+	> :last-child {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+`;
+const Avatar = styled.img`
+	border-radius: 100%;
+	width: 5rem;
+	height: 5rem;
+`;
+
+const CreatePostContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	background-color: #1c3d52;
+	border: 1px solid #000;
+	padding: 1rem;
+	margin-top: 2rem;
+`;
+
+const CreatePostLink = styled(Link)`
+	padding: 1rem 2rem;
+	background-color: #3a7fab;
+	width: 85%;
+	border-radius: 3px;
+`;
+
+const CreatePostAvatar = styled.img`
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 50%;
+`;
+
+const Button = styled.button`
+	padding: 0.8rem 1.5rem;
+	background-color: #1c3d52;
+	color: white;
+`;
 
 const Group = () => {
 	const { id } = useParams();
 	const { document: group, error, isPending } = useDocument("groups", id);
+	const { documents: posts } = useCollection("posts");
+
+	console.log(posts);
+
 	const groupRef = doc(db, "groups", id);
 
 	if (isPending) {
@@ -32,112 +110,83 @@ const Group = () => {
 	};
 
 	return (
-		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
+		<Wrapper className=''>
 			{group ? (
 				<>
-					<div className='flex gap-8'>
-						<img
-							src={group.photoURL}
-							className='w-60 h-60 border-solid border-2'
-							alt={`${group.name} Group Photo`}
-						/>
-						<div className='w-full'>
-							<div className='w-full'>
-								<div className='flex w-full justify-between'>
-									<h3 className='text-3xl  font-bold leading-normal text-gray-900 mb-4'>
-										{group.name}
-									</h3>
-									<div>
-										{auth.currentUser && (
-											<>
-												{!group.members.some(
-													(member) =>
-														member ===
-														auth.currentUser.uid
-												) ? (
-													<button
-														className='mr-3 w-full sm:w-auto py-2 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-														onClick={joinGroup}
-													>
-														Join
-													</button>
-												) : (
-													<button
-														className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-														onClick={leaveGroup}
-													>
-														Leave
-													</button>
-												)}
-											</>
-										)}
-									</div>
-								</div>
-
-								<div className=''>
-									<p className='text-base'>
-										{group.description}
-									</p>
-									{auth.currentUser &&
-										group.members.some(
-											(member) =>
-												member === auth.currentUser.uid
-										) &&
-										auth.currentUser.uid ===
-											group.admin && (
-											<div>
-												<EditDescription
-													className='mb-4'
-													id={group.id}
-													descriptionValue={
-														group.description
-													}
-												/>
-												<ChangeAvatar group={group} />
-											</div>
-										)}
-								</div>
-								<Link to={`/group/${id}/members`}>
-									<p className='mt-4'>
-										<span className='font-bold '>
-											Members:{" "}
-										</span>{" "}
-										{group.members.length}
-									</p>
+					<TopContainer>
+						<GroupDetails>
+							<div>
+								<Avatar src={group.photoURL} />
+							</div>
+							<div>
+								<h2>{group.name}</h2>
+								<p>{group.description}</p>
+								<Link to={`/group/${group.id}/members`}>
+									<p>Members: {group.members.length}</p>
 								</Link>
 							</div>
-						</div>
-					</div>
-
-					<div>
+						</GroupDetails>
 						<div>
-							<div className='flex justify-between items-center mt-16'>
-								<h2 className='text-3xl uppercase font-bold'>
-									Posts
-								</h2>
-								{auth.currentUser &&
-									group.members.some(
+							{auth.currentUser && (
+								<div>
+									{!group.members.some(
 										(member) =>
 											member === auth.currentUser.uid
-									) && (
-										<>
-											<Link
-												className='font-bold text-indigo-600 hover:text-indigo-500'
-												to={`/group/${id}/post/create`}
-											>
-												Create Post
-											</Link>
-										</>
+									) ? (
+										<Button
+											className=''
+											onClick={joinGroup}
+										>
+											Join
+										</Button>
+									) : (
+										<Button onClick={leaveGroup}>
+											Leave
+										</Button>
 									)}
-							</div>
-							<Posts />
+								</div>
+							)}
+							{auth.currentUser &&
+								group.members.some(
+									(member) => member === auth.currentUser.uid
+								) &&
+								auth.currentUser.uid === group.admin && (
+									<>
+										<EditDescription
+											className='mb-4'
+											id={group.id}
+											descriptionValue={group.description}
+										/>
+										<ChangeAvatar group={group} />
+									</>
+								)}
 						</div>
-					</div>
+					</TopContainer>
+
+					{auth.currentUser &&
+						group.members.some(
+							(member) => member === auth.currentUser.uid
+						) && (
+							<CreatePostContainer>
+								<div>
+									<CreatePostAvatar
+										src={auth.currentUser.photoURL}
+									/>
+								</div>
+								<CreatePostLink
+									to={`/group/${group.id}/post/create`}
+								>
+									Create Post
+								</CreatePostLink>
+							</CreatePostContainer>
+						)}
+
+					<PostsList posts={posts} />
 				</>
 			) : (
 				<p>document does not exist</p>
 			)}
-		</div>
+		</Wrapper>
 	);
 };
 

@@ -20,14 +20,8 @@ function SearchResults() {
 		setQueryText(searchQuery.get("query"));
 	}, [searchQuery]);
 
-	const { documents: posts } = useCollection("posts", [
-		["title", ">=", queryText],
-		["title", "<=", queryText + "\uf8ff"],
-	]);
-	const { documents: groups } = useCollection("groups", [
-		["name", ">=", queryText],
-		["name", "<=", queryText + "\uf8ff"],
-	]);
+	const { documents: posts } = useCollection("posts", []);
+	const { documents: groups } = useCollection("groups", []);
 	console.log(posts);
 
 	return (

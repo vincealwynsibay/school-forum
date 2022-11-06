@@ -46,6 +46,7 @@ const GroupAvatar = styled.img`
 	width: 100%;
 	border-radius: 50%;
 	width: 1.7rem;
+	height: 1.7rem;
 `;
 
 const GroupDetails = styled.div`
@@ -57,7 +58,8 @@ const GroupDetails = styled.div`
 
 const Content = styled.div`
 	margin: 1.5rem 0 2rem 0;
-
+	padding-right: 4.1rem;
+	width: 100%;
 	> h2 {
 		font-size: 1.6rem;
 		font-weight: 600;
@@ -65,6 +67,11 @@ const Content = styled.div`
 
 	> p {
 		font-size: 1.2rem;
+	}
+
+	> div {
+		background-color: #737373;
+		margin: 1rem 0;
 	}
 `;
 
@@ -100,6 +107,10 @@ const VotesContainer = styled.div`
 	}
 `;
 
+const DetailsContainer = styled.div`
+	width: 100%;
+`;
+
 const BottomDetails = styled.div`
 	display: flex;
 	align-items: center;
@@ -127,6 +138,12 @@ const BottomDetails = styled.div`
 	}
 `;
 
+const Image = styled.img`
+	max-width: 20rem;
+	width: 100%;
+	margin: 0 auto;
+`;
+
 const CommentDetails = styled.div`
 	display: flex;
 	align-items: center;
@@ -140,7 +157,9 @@ const Post = () => {
 	const { document: author } = useDocument("users", post && post.author);
 	const { document: group } = useDocument("groups", post && post.group);
 	const { documents: comments } = useCollection("comments", [
-		["post", "==", post_id],
+		"post",
+		"==",
+		post_id,
 	]);
 
 	const postRef = doc(db, "posts", post_id);
@@ -295,7 +314,7 @@ const Post = () => {
 										}
 									</VotesContainer>
 								)}
-								<div>
+								<DetailsContainer>
 									<TopDetails>
 										<Link to={`/group/${post.group}`}>
 											<GroupDetails>
@@ -319,6 +338,14 @@ const Post = () => {
 									<Content>
 										<h2>{post.title}</h2>
 										<p>{post.content}</p>
+										{post.photoURL && (
+											<div>
+												<Image
+													src={post.photoURL}
+													alt={post.title}
+												/>
+											</div>
+										)}
 									</Content>
 
 									<BottomDetails>
@@ -352,7 +379,7 @@ const Post = () => {
 												</a>
 											)}
 									</BottomDetails>
-								</div>
+								</DetailsContainer>
 							</PostView>
 						</Container>
 					</div>

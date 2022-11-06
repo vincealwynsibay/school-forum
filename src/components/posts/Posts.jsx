@@ -21,13 +21,10 @@ const Container = styled.div`
 const Posts = ({ filter }) => {
 	const { id } = useParams();
 	// const filterArr =
-	// 	filter && filter.toLowerCase() === "new"
-	// 		?
-	// 		: ["desc"];
 
 	const { documents, error } = useCollection(
 		"posts",
-		id ? [["group", "==", id]] : null,
+		id ? ["group", "==", id] : null,
 		["created_at", "desc"]
 	);
 

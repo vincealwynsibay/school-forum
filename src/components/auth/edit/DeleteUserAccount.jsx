@@ -10,7 +10,7 @@ const DeleteUserAccount = () => {
 			"Are you sure you want to delete this account? (y/n)"
 		);
 
-		if (res.toLowerCase() === "n") {
+		if (res.toLowerCase() === "y") {
 			deleteUser(auth.currentUser);
 			toast.success("User deleted successfully");
 			navigate("/");

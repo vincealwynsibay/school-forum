@@ -90,7 +90,7 @@ const App = () => {
 					{/* Main Content */}
 					<div>
 						{/* Search And Filter */}
-						<Wrapper>
+						{/* <Wrapper>
 							<SearchAndFilterContainer>
 								<Search />
 								<Filter
@@ -98,7 +98,7 @@ const App = () => {
 									setFilter={setFilter}
 								/>
 							</SearchAndFilterContainer>
-						</Wrapper>
+						</Wrapper> */}
 
 						{/* Content */}
 						<Routes>

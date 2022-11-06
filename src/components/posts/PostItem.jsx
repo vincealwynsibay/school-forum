@@ -26,6 +26,7 @@ const GroupAvatar = styled.img`
 	width: 100%;
 	border-radius: 50%;
 	width: 1.5rem;
+	height: 1.5rem;
 `;
 
 const GroupDetails = styled.div`
@@ -37,6 +38,7 @@ const GroupDetails = styled.div`
 
 const Content = styled.div`
 	margin: 1rem 0;
+	width: 100%;
 
 	> h2 {
 		font-size: 1.4rem;
@@ -45,6 +47,11 @@ const Content = styled.div`
 
 	> p {
 		font-size: 1.1rem;
+	}
+
+	> div {
+		background-color: #737373;
+		margin: 1rem 0;
 	}
 `;
 
@@ -61,6 +68,7 @@ const CommentDetails = styled.div`
 	align-items: center;
 	gap: 0.5rem;
 	> svg {
+		z-index: 1;
 		transform: scale(1.5);
 	}
 `;
@@ -85,11 +93,24 @@ const VotesContainer = styled.div`
 	}
 `;
 
+const DetailsContainer = styled.div`
+	width: 100%;
+	padding-right: 3.5rem;
+`;
+
+const Image = styled.img`
+	max-width: 20rem;
+	width: 100%;
+	margin: 0 auto;
+`;
+
 const PostItem = ({ post }) => {
 	const { document: user } = useDocument("users", post.author);
 	const { document: group } = useDocument("groups", post.group);
 	const { documents: comments } = useCollection("comments", [
-		["post", "==", post.id],
+		"post",
+		"==",
+		post.id,
 	]);
 	if (!post || !user || !group) {
 		return null;
@@ -99,55 +120,55 @@ const PostItem = ({ post }) => {
 		<Container className=''>
 			<VotesContainer>
 				<svg
-					clip-rule='evenodd'
-					fill-rule='evenodd'
-					stroke-linejoin='round'
-					stroke-miterlimit='2'
+					clipRule='evenodd'
+					fillRule='evenodd'
+					strokeLinejoin='round'
+					strokeMiterlimit='2'
 					viewBox='0 0 24 24'
 					xmlns='http://www.w3.org/2000/svg'
 				>
 					<path
 						d='m9.001 10.978h-3.251c-.412 0-.75-.335-.75-.752 0-.188.071-.375.206-.518 1.685-1.775 4.692-4.945 6.069-6.396.189-.2.452-.312.725-.312.274 0 .536.112.725.312 1.377 1.451 4.385 4.621 6.068 6.396.136.143.207.33.207.518 0 .417-.337.752-.75.752h-3.251v9.02c0 .531-.47 1.002-1 1.002h-3.998c-.53 0-1-.471-1-1.002z'
-						fill-rule='nonzero'
+						fillRule='nonzero'
 					/>
 				</svg>
 				<p>{post.upvotes.length - post.downvotes.length}</p>
 				<svg
-					clip-rule='evenodd'
-					fill-rule='evenodd'
-					stroke-linejoin='round'
-					stroke-miterlimit='2'
+					clipRule='evenodd'
+					fillRule='evenodd'
+					strokeLinejoin='round'
+					strokeMiterlimit='2'
 					viewBox='0 0 24 24'
 					xmlns='http://www.w3.org/2000/svg'
 				>
 					<path
 						d='m9.001 13.022h-3.251c-.412 0-.75.335-.75.752 0 .188.071.375.206.518 1.685 1.775 4.692 4.945 6.069 6.396.189.2.452.312.725.312.274 0 .536-.112.725-.312 1.377-1.451 4.385-4.621 6.068-6.396.136-.143.207-.33.207-.518 0-.417-.337-.752-.75-.752h-3.251v-9.02c0-.531-.47-1.002-1-1.002h-3.998c-.53 0-1 .471-1 1.002z'
-						fill-rule='nonzero'
+						fillRule='nonzero'
 					/>
 				</svg>
 			</VotesContainer>
 
-			<div>
-				<Link to={`/group/${post.group}/post/${post.id}`}>
-					{/* Top  */}
-					<TopDetails className=''>
-						<Link className='' to={`/group/${post.group}`}>
-							<GroupDetails>
-								<GroupAvatar
-									className=''
-									src={group && group.photoURL}
-									alt='avatar'
-								/>
-								<p className=''> {group && group.name}</p>
-							</GroupDetails>
-						</Link>
-						<span>•</span>
-						<p className=''> Posted by </p>
-						<Link className='' to={`/profile/${user.id}`}>
-							{user && user.displayName}
-						</Link>
-					</TopDetails>
+			<DetailsContainer>
+				{/* Top  */}
+				<TopDetails className=''>
+					<Link className='' to={`/group/${post.group}`}>
+						<GroupDetails>
+							<GroupAvatar
+								className=''
+								src={group && group.photoURL}
+								alt='avatar'
+							/>
+							<p className=''> {group && group.name}</p>
+						</GroupDetails>
+					</Link>
+					<span>•</span>
+					<p className=''> Posted by </p>
+					<Link className='' to={`/profile/${user.id}`}>
+						{user && user.displayName}
+					</Link>
+				</TopDetails>
 
+				<Link to={`/group/${post.group}/post/${post.id}`}>
 					{/* Content */}
 					<Content className=''>
 						<h2 className=''>{post.title}</h2>
@@ -155,29 +176,28 @@ const PostItem = ({ post }) => {
 						<p className=''>
 							{`${post.content.substring(0, 200)}`}...
 						</p>
+						{/* Image */}
+						<div>
+							{post.photoURL && (
+								<Image
+									className='max-w-sm max-h-sm'
+									src={post.photoURL}
+								/>
+							)}
+						</div>
 					</Content>
-
-					{/* Image */}
-					<div>
-						{post.photoURL && (
-							<img
-								className='max-w-sm max-h-sm'
-								src={post.photoURL}
-							/>
-						)}
-					</div>
-
-					<BottomDetails>
-						{/* Comments */}
-						<CommentDetails className=''>
-							<BiCommentDetail />
-							<p className=''>
-								{comments && comments.length} Comments
-							</p>
-						</CommentDetails>
-					</BottomDetails>
 				</Link>
-			</div>
+
+				<BottomDetails>
+					{/* Comments */}
+					<CommentDetails className=''>
+						<BiCommentDetail />
+						<p className=''>
+							{comments && comments.length} Comments
+						</p>
+					</CommentDetails>
+				</BottomDetails>
+			</DetailsContainer>
 		</Container>
 	);
 };

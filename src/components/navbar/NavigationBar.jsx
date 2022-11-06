@@ -9,8 +9,8 @@ import toast from "react-hot-toast";
 import { AiFillHome } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { MdOutlineGroups } from "react-icons/md";
-import { IoCreateOutline } from "react-icons/io5";
-
+import { IoCreateOutline, IoSettingsOutline } from "react-icons/io5";
+import { BiLogOut } from "react-icons/bi";
 const Navbar = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -90,11 +90,18 @@ const NavigationBar = () => {
 						<Link to={`/profile/${user.uid}`}>
 							<BsPerson /> Profile
 						</Link>
+						<Link to={`/settings/account`}>
+							<IoSettingsOutline /> Settings
+						</Link>
 						<Link to='/groups'>
 							<MdOutlineGroups /> Groups
 						</Link>
 						<Link to='/'>
 							<IoCreateOutline /> Create Post
+						</Link>
+						<Link to='/' onClick={logout}>
+							<BiLogOut />
+							Logout
 						</Link>
 					</>
 				) : (
