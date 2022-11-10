@@ -3,6 +3,21 @@ import { useParams } from "react-router-dom";
 import { useDocument } from "../../../hooks/useDocument";
 import Spinner from "../../spinner/Spinner";
 import FollowerItem from "./FollowerItem";
+import styled from "styled-components";
+
+const Container = styled.div`
+	padding-top: 4rem;
+
+	> h2 {
+		font-size: 1.8rem;
+		margin-bottom: 1rem;
+	}
+
+	> div {
+		display: flex;
+		flex-direction: column;
+	}
+`;
 
 const Followers = () => {
 	const { id } = useParams();
@@ -22,16 +37,17 @@ const Followers = () => {
 	}
 
 	return (
-		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
-			<h2 className='text-5xl font-medium mb-10'>Followers</h2>
-			<div className='grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
+		<Container>
+			<h2>Followers</h2>
+			<div>
 				{followers.map((follower) => {
 					return (
 						<FollowerItem key={follower} followerId={follower} />
 					);
 				})}
 			</div>
-		</div>
+			{followers.length === 0 && <div>No followers</div>}
+		</Container>
 	);
 };
 

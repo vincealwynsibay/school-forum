@@ -38,7 +38,7 @@ const Comments = () => {
 
 	return (
 		<Container>
-			<Header className=''>Comments</Header>
+			<Header>Comments</Header>
 			{auth && auth.currentUser && (
 				<CreateComment handleNewComment={handleNewComment} />
 			)}

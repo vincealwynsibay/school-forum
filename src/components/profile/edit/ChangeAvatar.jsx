@@ -1,9 +1,68 @@
 import React, { useState } from "react";
+import useUploadFile from "../../../hooks/useUploadFile";
 
-const ChangeAvatar = ({ handleSaveAvatarChanges }) => {
+import { MdOutlineAccountCircle } from "react-icons/md";
+import styled from "styled-components";
+import { auth, db, storage } from "../../../utils/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
+import { getDownloadURL, ref } from "firebase/storage";
+
+const Container = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	> h3 {
+		font-size: 1.1rem;
+	}
+`;
+
+const File = styled.label`
+	border: 1px solid ${(props) => props.theme.accent};
+	border-radius: 20px;
+	display: inline-block;
+	padding: 0.7rem 1.5rem;
+	cursor: pointer;
+	background-color: ${(props) => props.theme.accent};
+	color: white;
+
+	> div {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		> svg {
+			transform: scale(1.3);
+		}
+	}
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
+
+	> input {
+		display: none;
+	}
+`;
+
+const ChangeAvatar = ({ user_id }) => {
 	const [avatar, setAvatar] = useState(null);
 	const [avatarError, setAvatarError] = useState(null);
-	const [show, setShow] = useState(false);
+	const { uploadFile, uploading } = useUploadFile();
+
+	const handleSaveAvatarChanges = async (file) => {
+		console.log("handleSaveAvatarChanges");
+		const firestoreRef = doc(db, "users", user_id);
+		const storageRef = ref(storage, `profiles/${user_id}/${file.name}`);
+		await uploadFile(storageRef, file);
+		getDownloadURL(storageRef).then(async (url) => {
+			await updateDoc(firestoreRef, {
+				photoURL: url,
+			});
+		});
+
+		toast.success("Profile updated successfully");
+	};
 
 	const handleFileChange = (e) => {
 		setAvatar(null);
@@ -23,77 +82,27 @@ const ChangeAvatar = ({ handleSaveAvatarChanges }) => {
 		}
 
 		setAvatarError(null);
-		setAvatar(selected);
-	};
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		handleSaveAvatarChanges(avatar);
+		handleSaveAvatarChanges(selected);
 	};
 
 	return (
-		<div>
-			<h5 className='pr-5 font-bold text-lg mb-2'>Avatar</h5>
-			<div>
-				<div className='mt-1 flex items-center '>
-					<span className='inline-block h-12 w-12 rounded-full overflow-hidden bg-gray-100 mb-2'>
-						<svg
-							className='h-full w-full text-gray-300'
-							fill='currentColor'
-							viewBox='0 0 24 24'
-						>
-							<path d='M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z' />
-						</svg>
-					</span>
-					{!show && (
-						<>
-							<button
-								type='button'
-								onClick={() => setShow(true)}
-								className='ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-							>
-								Change
-							</button>
-						</>
-					)}
-				</div>
-			</div>
-			{show && (
-				<form onSubmit={handleSubmit}>
-					<div className='mb-2'>
-						<input
-							type='file'
-							name='avatar'
-							onChange={handleFileChange}
-							className="file:mr-4 file:py-2 file:px-4
-							file:rounded-full file:border-0
-							file:text-sm file:font-semibold
-							file:bg-violet-50 file:text-violet-700
-							hover:file:bg-violet-100'
-								  "
-						/>
-						{avatarError && (
-							<div className='text-danger'>{avatarError}</div>
-						)}
-					</div>
+		<Container>
+			<h3>Avatar</h3>
+			<form>
+				<File>
 					<div>
-						<div>
-							<input
-								type='submit'
-								value='Save Changes'
-								className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-							/>
-							<input
-								type='button'
-								value='Cancel'
-								className='cursor-pointer mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm'
-								onClick={() => setShow(false)}
-							/>
-						</div>
+						<MdOutlineAccountCircle />
+						Change Avatar
 					</div>
-				</form>
-			)}
-		</div>
+					<input
+						type='file'
+						name='avatar'
+						onChange={handleFileChange}
+					/>
+					{uploading && <p>Uploading...</p>}
+				</File>
+			</form>
+		</Container>
 	);
 };
 

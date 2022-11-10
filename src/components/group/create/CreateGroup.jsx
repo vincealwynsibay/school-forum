@@ -4,6 +4,78 @@ import gravatar from "gravatar";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "../../../utils/firebase";
 import toast from "react-hot-toast";
+import styled from "styled-components";
+
+const Container = styled.div`
+	margin: 4rem 0;
+	padding: 1.5rem;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
+`;
+
+const Header = styled.h2`
+	font-size: 1.8rem;
+	font-weight: 700;
+	margin-bottom: 2rem;
+	color: ${(props) => props.theme.black};
+`;
+
+const Form = styled.form`
+	margin: 1rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+`;
+
+const Label = styled.label`
+	display: block;
+	text-transform: capitalize;
+	margin-bottom: 0.5rem;
+	color: ${(props) => props.theme.darkGray};
+`;
+const Input = styled.input`
+	width: 100%;
+	border: 1px solid #1c3d52;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+
+	:focus {
+		border: 1px solid ${(props) => props.theme.accent};
+		outline: none;
+	}
+`;
+const TextArea = styled.textarea`
+	width: 100%;
+	border: 1px solid #1c3d52;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+	:focus {
+		border: 1px solid ${(props) => props.theme.accent}};
+		outline: none;
+	}
+`;
+const Button = styled.button`
+	cursor: pointer;
+	border-radius: 20px;
+
+	background-color: ${(props) => props.theme.accent};
+	margin-top: 1rem;
+	padding: 1rem 2rem;
+	width: 100%;
+	color: white;
+	font-size: 1rem;
+	font-weight: 600;
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
+
+	:active {
+		outline: 0;
+	}
+`;
 
 const CreateGroup = () => {
 	const [formData, setFormData] = useState({ name: "", description: "" });
@@ -56,37 +128,33 @@ const CreateGroup = () => {
 	};
 
 	return (
-		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
-			<h1 className='text-3xl font-medium mb-4'>Create Group</h1>
-			<form onSubmit={handleSubmit}>
+		<Container>
+			<Header>Create Group</Header>
+			<Form onSubmit={handleSubmit}>
 				<div>
-					<input
+					<Label htmlFor='name'>Group Name</Label>
+					<Input
 						type='text'
 						name='name'
 						value={name}
 						onChange={handleChange}
 						placeholder='Name'
-						className='mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md'
 					/>
 				</div>
 				<div>
-					<textarea
+					<Label htmlFor='name'>Description</Label>
+					<TextArea
 						type='text'
 						name='description'
 						value={description}
 						onChange={handleChange}
 						placeholder='Description'
-						className='shadow-sm mb-2 focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md'
-					></textarea>
+					></TextArea>
 				</div>
 
-				<input
-					type='submit'
-					value='Create Group'
-					className='mr-3 w-full sm:w-auto py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-300 dark:disabled:bg-indigo-800 text-white dark:disabled:text-indigo-400 text-sm font-semibold rounded-md shadow focus:outline-none cursor-pointer'
-				/>
-			</form>
-		</div>
+				<Button type='submit'>Create Group</Button>
+			</Form>
+		</Container>
 	);
 };
 

@@ -8,6 +8,84 @@ import { Link } from "react-router-dom";
 import { Tab } from "@headlessui/react";
 import { useCollection } from "../../hooks/useCollection";
 import PostsList from "../posts/PostsList";
+import { MdOutlineModeEditOutline } from "react-icons/md";
+import styled from "styled-components";
+
+const Container = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	@media (min-width: 768px) {
+		flex-direction: row-reverse;
+
+		> :nth-child(1) {
+			flex-basis: 35%;
+		}
+		> :nth-child(2) {
+			flex-basis: 65%;
+		}
+	}
+`;
+
+const ProfileContainer = styled.div`
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.primary};
+	gap: 1rem;
+
+	h3 {
+		font-weight: 700;
+		font-size: 1.2rem;
+	}
+
+	> :nth-of-type(2) {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	> :nth-of-type(4) {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	a {
+		color: ${(props) => props.theme.black};
+		:hover {
+			color: ${(props) => props.theme.accent};
+		}
+	}
+`;
+
+const Avatar = styled.img`
+	width: 5rem;
+	height: 5rem;
+	border-radius: 50%;
+`;
+
+const EditLink = styled(Link)`
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+
+	color: ${(props) => props.theme.black};
+	:hover {
+		color: ${(props) => props.theme.accent};
+	}
+
+	svg {
+		transform: scale(1.5);
+	}
+`;
+
+const PostsContainer = styled.div`
+	> h3 {
+		font-size: 1.8rem;
+		font-weight: 700;
+	}
+`;
 
 const Profile = () => {
 	const { id } = useParams();
@@ -45,91 +123,98 @@ const Profile = () => {
 
 	return (
 		<div>
-			<div>
-				<h3>
-					{auth.currentUser.uid === document.id
-						? `Your Posts`
-						: `${document.name}'s Posts`}
-				</h3>
-				{error && <p>{error.message}</p>}
-				<PostsList posts={posts} />
-				{posts.length === 0 && <p>no posts</p>}
-			</div>
-
-			<div>
-				{document ? (
-					<>
-						<img
-							src={document.photoURL}
-							alt={`${document.displayName}'s Profile`}
-							className='h-20 w-20 rounded-full '
-						/>
-						<div className=''>
-							<div className=''>
-								<h3 className=''>{document.displayName}</h3>
-								{auth.currentUser &&
-									auth.currentUser.uid === id && (
-										<Link to='/settings/profile'>
-											<svg
-												x-description='Heroicon name: solid/pencil'
-												xmlns='http://www.w3.org/2000/svg'
-												viewBox='0 0 20 20'
-												fill='currentColor'
-												aria-hidden='true'
-											>
-												<path d='M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z'></path>
-											</svg>
-											Edit Profile
-										</Link>
-									)}
-								{auth.currentUser &&
-									auth.currentUser.uid !== id && (
-										<>
-											{!document.followers.some(
-												(follower) =>
-													follower ===
-													auth.currentUser.uid
-											) ? (
-												<button onClick={followUser}>
-													Follow
-												</button>
-											) : (
-												<button onClick={unfollowUser}>
-													Unfollow
-												</button>
-											)}
-										</>
-									)}
-							</div>
-						</div>
-						<p>{document.bio === "" ? "No Bio" : document.bio}</p>
-						<div>
-							<Link to={`/profile/${id}/followers`}>
-								<p>
-									<span>Followers:</span>{" "}
-									{document.followers.length}
-								</p>
-							</Link>
-							<Link to={`/profile/${id}/following`}>
-								<p>
-									<span>Following:</span>{" "}
-									{document.following.length}
-								</p>
-							</Link>
-						</div>
-						{auth.currentUser && (
-							<div>
-								<p>
-									<span>Status: </span>
-									{document.online ? "Online" : "Offline"}
-								</p>
-							</div>
+			<Container>
+				<div>
+					<ProfileContainer>
+						{document ? (
+							<>
+								<div>
+									<Avatar
+										src={document.photoURL}
+										alt={`${document.displayName}'s Profile`}
+									/>
+								</div>
+								<div>
+									<h3>{document.displayName}</h3>
+									{auth.currentUser &&
+										auth.currentUser.uid === id && (
+											<EditLink to='/settings/profile'>
+												<MdOutlineModeEditOutline />
+												Edit Profile
+											</EditLink>
+										)}
+									{auth.currentUser &&
+										auth.currentUser.uid !== id && (
+											<>
+												{!document.followers.some(
+													(follower) =>
+														follower ===
+														auth.currentUser.uid
+												) ? (
+													<button
+														onClick={followUser}
+													>
+														Follow
+													</button>
+												) : (
+													<button
+														onClick={unfollowUser}
+													>
+														Unfollow
+													</button>
+												)}
+											</>
+										)}
+								</div>
+								<div>
+									<p>
+										{document.bio === ""
+											? "No Bio"
+											: document.bio}
+									</p>
+								</div>
+								<div>
+									<Link to={`/profile/${id}/followers`}>
+										<p>
+											<span>Followers:</span>{" "}
+											{document.followers.length}
+										</p>
+									</Link>
+									<Link to={`/profile/${id}/following`}>
+										<p>
+											<span>Following:</span>{" "}
+											{document.following.length}
+										</p>
+									</Link>
+								</div>
+								{auth.currentUser && (
+									<div>
+										<p>
+											<span>Status: </span>
+											{document.online
+												? "Online"
+												: "Offline"}
+										</p>
+									</div>
+								)}
+							</>
+						) : (
+							<p>document does not exist</p>
 						)}
-					</>
-				) : (
-					<p>document does not exist</p>
-				)}
-			</div>
+					</ProfileContainer>
+				</div>
+				<PostsContainer>
+					<h3>
+						{auth.currentUser &&
+						auth.currentUser.uid === document.id
+							? `Your Posts`
+							: `${document.displayName}'s Posts`}
+					</h3>
+					{error && <p>{error.message}</p>}
+					<PostsList posts={posts} />
+					{posts.length === 0 && <p>no posts</p>}
+				</PostsContainer>
+			</Container>
 		</div>
 	);
 };

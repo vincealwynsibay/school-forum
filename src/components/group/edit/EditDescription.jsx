@@ -6,8 +6,15 @@ import styled from "styled-components";
 
 const Button = styled.button`
 	padding: 0.8rem 1.5rem;
-	background-color: #1c3d52;
-	color: white;
+	border: 1px solid ${(props) => props.theme.accent};
+	border-radius: 20px;
+	color: ${(props) => props.theme.black};
+	background: none;
+
+	:hover {
+		background-color: ${(props) => props.theme.accent};
+		color: white;
+	}
 `;
 
 const Container = styled.div`
@@ -20,9 +27,13 @@ const Container = styled.div`
 	z-index: 3;
 
 	> h1 {
-		font-size: 2rem;
+		font-size: 1.5rem;
 		text-align: left;
 		margin-bottom: 2rem;
+	}
+
+	> {
+		margin: 0;
 	}
 `;
 
@@ -42,9 +53,15 @@ const Form = styled.form`
 	width: 100%;
 	gap: 1rem;
 
-	> input {
+	> textarea {
 		padding: 1rem 1.5rem;
-		width: 15rem;
+		width: 20rem;
+		border: 1px solid ${(props) => props.theme.black};
+		border-radius: 20px;
+
+		:active {
+			border: 1px solid ${(props) => props.theme.black};
+		}
 	}
 
 	> div {
@@ -54,30 +71,14 @@ const Form = styled.form`
 
 		> button {
 			border-radius: 3px;
-			background-color: #1c3d52;
+			border: 1px solid ${(props) => props.theme.accent};
 			margin-top: 1rem;
 			padding: 0.8rem;
-			color: white;
-			font-weight: 600;
-			font-size: 0.8rem;
-		}
-		> input {
-			border-radius: 3px;
-			background-color: #1c3d52;
-			margin-top: 1rem;
-			padding: 0.8rem;
-			color: white;
+			color: ${(props) => props.theme.black};
 			font-weight: 600;
 			font-size: 0.8rem;
 		}
 	}
-`;
-
-const InputButton = styled.input`
-	padding: 0.8rem 1.5rem;
-	background-color: #1c3d52;
-	color: white;
-	cursor: pointer;
 `;
 
 const EditDescription = ({ id, descriptionValue }) => {
@@ -101,7 +102,7 @@ const EditDescription = ({ id, descriptionValue }) => {
 					<Container>
 						<h1>Edit Description</h1>
 						<Form onSubmit={handleSubmit}>
-							<input
+							<textarea
 								type='text'
 								name='description'
 								placeholder='description'
@@ -110,11 +111,12 @@ const EditDescription = ({ id, descriptionValue }) => {
 							/>
 							<div>
 								<Button type='submit'>Save Changes</Button>
-								<InputButton
+								<Button
 									type='button'
-									value='Cancel'
 									onClick={() => setShow(false)}
-								/>
+								>
+									Cancel
+								</Button>
 							</div>
 						</Form>
 					</Container>

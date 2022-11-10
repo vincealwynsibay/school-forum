@@ -1,3 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+html {
+	font-size: 100%;
+	box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden;
+}
+
+a {
+	text-decoration: none;
+}
+
+button {
+	cursor: pointer;
+	outline: 0;
+	border: 0;
+}
+input {
+	outline: 0;
+	border: 0;
+	font-size: 1rem;
+}
+textarea {
+	outline: 0;
+	border: 0;
+	padding: 1rem;
+	font-size: 1rem;
+}
+
+select {
+	outline: 0;
+	border: 0;
+	background: none;
+}
+
+option {
+	outline: 0;
+	border: 0;
+	background: none;
+}

@@ -3,6 +3,21 @@ import { useParams } from "react-router-dom";
 import { useDocument } from "../../../hooks/useDocument";
 import Spinner from "../../spinner/Spinner";
 import MemberItem from "./MemberItem";
+import styled from "styled-components";
+
+const Container = styled.div`
+	padding-top: 4rem;
+
+	> div {
+		display: flex;
+		flex-direction: column;
+	}
+
+	> h2 {
+		font-size: 2rem;
+		margin-bottom: 1rem;
+	}
+`;
 
 const Members = () => {
 	const { id } = useParams();
@@ -22,14 +37,14 @@ const Members = () => {
 	}
 
 	return (
-		<div className='max-w-2xl mx-auto py-10 px-4 sm:py-16 sm:px-6 lg:max-w-full lg:px-40'>
-			<h2 className='text-5xl font-medium mb-10'>Members</h2>
-			<div className='grid grid-cols-1 gap-y-10 sm:grid-cols-2 gap-x-6 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8'>
+		<Container>
+			<h2>Members</h2>
+			<div>
 				{members.map((member) => {
 					return <MemberItem key={member} memberId={member} />;
 				})}
 			</div>
-		</div>
+		</Container>
 	);
 };
 

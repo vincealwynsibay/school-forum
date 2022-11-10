@@ -6,7 +6,7 @@ import { useDocument } from "../../hooks/useDocument";
 import { auth } from "../../utils/firebase";
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import { AiFillHome } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { MdOutlineGroups } from "react-icons/md";
 import { IoCreateOutline, IoSettingsOutline } from "react-icons/io5";
@@ -14,7 +14,8 @@ import { BiLogOut } from "react-icons/bi";
 const Navbar = styled.div`
 	display: flex;
 	justify-content: space-between;
-	background-color: #1c3d52;
+	background-color: ${(props) => props.theme.primary};
+	z-index: 5;
 `;
 
 const NavLinks = styled.div`
@@ -23,14 +24,33 @@ const NavLinks = styled.div`
 	@media (min-width: 768px) {
 		display: flex;
 		flex-direction: column;
-		padding: 0 1rem;
+		width: 100%;
 		height: 100vh;
+
+		h1 {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			margin: 0 1rem;
+			padding: 1rem 1rem;
+			font-weight: 700;
+			font-size: 1.2rem;
+			color: ${(props) => props.theme.accent};
+			margin-bottom: 1rem;
+		}
+
 		> a {
 			display: flex;
 			align-items: center;
 			gap: 1rem;
-			padding: 1rem 0;
-			color: white;
+			margin: 0 1rem;
+			padding: 1rem 1rem;
+			border-radius: 20px;
+			color: ${(props) => props.theme.black};
+			:hover {
+				color: ${(props) => props.theme.accent};
+				background-color: ${(props) => props.theme.primary};
+			}
 		}
 	}
 `;
@@ -44,11 +64,16 @@ const NavIcons = styled.div`
 	left: 0;
 	right: 0;
 	padding: 1rem 0;
-	background-color: #1c3d52;
+	background-color: ${(props) => props.theme.primary}} 
 
 	> a {
 		transform: scale(1.5);
-		color: white;
+		color: ${(props) => props.theme.black};
+
+		:hover {
+			color: ${(props) => props.theme.accent};
+			background-color: ${(props) => props.theme.primary};
+		}
 	}
 
 	@media (min-width: 481px) {
@@ -83,9 +108,9 @@ const NavigationBar = () => {
 			<NavLinks>
 				{user ? (
 					<>
-						<Link to='/'>School Forum</Link>
-						<Link to='/'>
-							<AiFillHome /> Home
+						<h1 to='/'>School Forum</h1>
+						<Link to='/' className='home'>
+							<AiOutlineHome /> Home
 						</Link>
 						<Link to={`/profile/${user.uid}`}>
 							<BsPerson /> Profile
@@ -96,7 +121,7 @@ const NavigationBar = () => {
 						<Link to='/groups'>
 							<MdOutlineGroups /> Groups
 						</Link>
-						<Link to='/'>
+						<Link to='posts/create'>
 							<IoCreateOutline /> Create Post
 						</Link>
 						<Link to='/' onClick={logout}>
@@ -106,7 +131,7 @@ const NavigationBar = () => {
 					</>
 				) : (
 					<>
-						<Link to='/'>School Forum</Link>
+						<h1>School Forum</h1>
 						<Link to='/login'>Login</Link>
 						<Link to='/register'>Register</Link>
 					</>
@@ -117,16 +142,22 @@ const NavigationBar = () => {
 				{user ? (
 					<>
 						<Link to='/'>
-							<AiFillHome />
+							<AiOutlineHome />
 						</Link>
 						<Link to={`/profile/${user.uid}`}>
 							<BsPerson />
+						</Link>
+						<Link to={`/settings/account`}>
+							<IoSettingsOutline />
 						</Link>
 						<Link to='/groups'>
 							<MdOutlineGroups />
 						</Link>
 						<Link to='/'>
 							<IoCreateOutline />
+						</Link>
+						<Link to='/'>
+							<BiLogOut />
 						</Link>
 					</>
 				) : (

@@ -8,19 +8,25 @@ import { FiUpload } from "react-icons/fi";
 import styled from "styled-components";
 
 const File = styled.label`
-	border: 1px solid #1c3d52;
+	border: 1px solid ${(props) => props.theme.accent};
 	display: inline-block;
 	padding: 0.7rem 1.5rem;
 	cursor: pointer;
-	background-color: #1c3d52;
-	color: white;
+	border-radius: 20px;
+	color: ${(props) => props.theme.black};
 
+	:hover {
+		background-color: ${(props) => props.theme.accent};
+		color: #fff;
+	}
 	> div {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		font-size: 14px;
+
 		> svg {
-			transform: scale(1.3);
+			transform: scale(1);
 		}
 	}
 
@@ -70,15 +76,10 @@ const ChangeAvatar = ({ group }) => {
 		handleSaveAvatarChanges(selected);
 	};
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		handleSaveAvatarChanges(avatar);
-	};
-
 	return (
 		<div>
-			<form onSubmit={handleSubmit}>
-				<File className='mb-2'>
+			<form>
+				<File>
 					<div>
 						<FiUpload />
 						Change Avatar

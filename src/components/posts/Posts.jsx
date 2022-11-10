@@ -1,52 +1,41 @@
-import {
-	doc,
-	serverTimestamp,
-	setDoc,
-	Timestamp,
-	updateDoc,
-} from "firebase/firestore";
-import React from "react";
+import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { useCollection } from "../../hooks/useCollection";
-import { db, timestamp } from "../../utils/firebase";
-import Wrapper from "../layout/Wrapper";
 import PostsList from "./PostsList";
 import styled from "styled-components";
 
 const Container = styled.div`
-	padding-top: 2rem;
+	padding-top: 1rem;
 `;
 
-const Posts = ({ filter }) => {
+const Posts = () => {
 	const { id } = useParams();
-	// const filterArr =
 
 	const { documents, error } = useCollection(
 		"posts",
-		id ? ["group", "==", id] : null,
-		["created_at", "desc"]
+		id ? ["group", "==", id] : null
 	);
 
 	if (!id) {
 		return (
-			<Wrapper>
-				<Container className=''>
-					<div className=''></div>
+			<div>
+				<Container>
+					<div></div>
 					{error && <p>{error.message}</p>}
 					<PostsList posts={documents} />
 				</Container>
-			</Wrapper>
+			</div>
 		);
 	}
 
 	return (
-		<Wrapper>
-			<Container className=''>
+		<div>
+			<Container>
 				{error && <p>{error.message}</p>}
 				<PostsList posts={documents} />
 			</Container>
-		</Wrapper>
+		</div>
 	);
 };
 

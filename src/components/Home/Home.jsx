@@ -1,28 +1,32 @@
-import React from "react";
-import Filter from "../filter/Filter";
+import React, { useState } from "react";
 import Search from "../search/Search";
 import styled from "styled-components";
 import Posts from "../posts/Posts";
 import { useAuthContext } from "../../hooks/useAuthContext";
-import Wrapper from "../layout/Wrapper";
 import { Link } from "react-router-dom";
 
 const CreatePostContainer = styled.div`
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
+	align-items: center;
 	gap: 1rem;
-	background-color: #1c3d52;
-	border: 1px solid #000;
 	padding: 1rem;
 	margin-top: 2rem;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.primary};
 `;
 
 const CreatePostLink = styled(Link)`
 	padding: 1rem 2rem;
-	background-color: #3a7fab;
-	width: 85%;
-	border-radius: 3px;
+	width: 100%;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.accent};
+	color: ${(props) => props.theme.neutral};
+	font-weight: 700;
+
+	:hover {
+		color: ${(props) => props.theme.accentHover};
+	}
 `;
 
 const Avatar = styled.img`
@@ -33,11 +37,12 @@ const Avatar = styled.img`
 
 const AvatarContainer = styled.div``;
 
-function Home({ filter }) {
+function Home() {
 	const { user } = useAuthContext();
+
 	return (
 		<div>
-			<Wrapper>
+			<div>
 				{user && (
 					<CreatePostContainer>
 						<AvatarContainer>
@@ -48,8 +53,8 @@ function Home({ filter }) {
 						</CreatePostLink>
 					</CreatePostContainer>
 				)}
-			</Wrapper>
-			<Posts filter={filter} />
+			</div>
+			<Posts />
 		</div>
 	);
 }

@@ -8,7 +8,6 @@ import Spinner from "../spinner/Spinner";
 import Posts from "../posts/Posts";
 import ChangeAvatar from "./edit/ChangeAvatar";
 import toast from "react-hot-toast";
-import Wrapper from "../layout/Wrapper";
 import styled from "styled-components";
 import PostsList from "../posts/PostsList";
 import { useCollection } from "../../hooks/useCollection";
@@ -18,8 +17,9 @@ const TopContainer = styled.div`
 	justify-content: space-between;
 	margin-top: 2rem;
 	gap: 1rem;
-	border: 1px solid #737373;
 	padding: 1rem;
+	background: ${(props) => props.theme.primary};
+	border-radius: 20px;
 
 	> :last-child {
 		display: flex;
@@ -32,10 +32,6 @@ const TopContainer = styled.div`
 const GroupDetails = styled.div`
 	display: flex;
 	gap: 1rem;
-	& h2 {
-		font-size: 2rem;
-		font-weight: 700;
-	}
 
 	> :first-child {
 		width: 5rem;
@@ -44,7 +40,11 @@ const GroupDetails = styled.div`
 	> :last-child {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+	}
+	& h2 {
+		font-size: 1.8rem;
+		font-weight: 700;
+		margin: 0;
 	}
 `;
 const Avatar = styled.img`
@@ -55,20 +55,25 @@ const Avatar = styled.img`
 
 const CreatePostContainer = styled.div`
 	display: flex;
-	align-items: center;
 	justify-content: space-between;
+	align-items: center;
 	gap: 1rem;
-	background-color: #1c3d52;
-	border: 1px solid #000;
 	padding: 1rem;
-	margin-top: 2rem;
+	margin-top: 1rem;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.primary};
 `;
 
 const CreatePostLink = styled(Link)`
 	padding: 1rem 2rem;
-	background-color: #3a7fab;
-	width: 85%;
-	border-radius: 3px;
+	width: 100%;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.neutral};
+	color: ${(props) => props.theme.black};
+
+	:hover {
+		color: ${(props) => props.theme.accent};
+	}
 `;
 
 const CreatePostAvatar = styled.img`
@@ -79,8 +84,13 @@ const CreatePostAvatar = styled.img`
 
 const Button = styled.button`
 	padding: 0.8rem 1.5rem;
-	background-color: #1c3d52;
+	background-color: ${(props) => props.theme.accent};
 	color: white;
+	border-radius: 20px;
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
 `;
 
 const Group = () => {
@@ -110,7 +120,7 @@ const Group = () => {
 	};
 
 	return (
-		<Wrapper className=''>
+		<div>
 			{group ? (
 				<>
 					<TopContainer>
@@ -133,10 +143,7 @@ const Group = () => {
 										(member) =>
 											member === auth.currentUser.uid
 									) ? (
-										<Button
-											className=''
-											onClick={joinGroup}
-										>
+										<Button onClick={joinGroup}>
 											Join
 										</Button>
 									) : (
@@ -153,7 +160,6 @@ const Group = () => {
 								auth.currentUser.uid === group.admin && (
 									<>
 										<EditDescription
-											className='mb-4'
 											id={group.id}
 											descriptionValue={group.description}
 										/>
@@ -186,7 +192,7 @@ const Group = () => {
 			) : (
 				<p>document does not exist</p>
 			)}
-		</Wrapper>
+		</div>
 	);
 };
 

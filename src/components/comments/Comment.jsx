@@ -18,11 +18,11 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
 	padding: 1rem;
-	border: 1px solid #000;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
-	border-radius: 3px;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
 `;
 
 const DetailsContainer = styled.div`
@@ -43,6 +43,10 @@ const VoteContainer = styled.div`
 		gap: 1rem;
 		> svg {
 			width: 1.3rem;
+			cursor: pointer;
+			:hover {
+				color: ${(props) => props.theme.accent};
+			}
 		}
 	}
 `;
@@ -51,11 +55,16 @@ const AvatarContainer = styled.div`
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		color: ${(props) => props.theme.black};
+		:hover {
+			color: ${(props) => props.theme.accent};
+		}
 	}
 
 	& img {
 		border-radius: 50%;
 		width: 1.7rem;
+		height: 1.7rem;
 	}
 `;
 
@@ -120,7 +129,7 @@ const Comment = ({ comment }) => {
 
 	return (
 		<Container>
-			<div className=''>
+			<div>
 				<p>{comment.content}</p>
 			</div>
 
@@ -200,10 +209,7 @@ const Comment = ({ comment }) => {
 					)}
 				</VoteContainer>
 				<AvatarContainer>
-					<Link
-						className='flex items-center'
-						to={`/profile/${commentUser.id}`}
-					>
+					<Link to={`/profile/${commentUser.id}`}>
 						<img
 							src={commentUser && commentUser.photoURL}
 							alt='avatar'

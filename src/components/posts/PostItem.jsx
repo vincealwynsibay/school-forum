@@ -6,20 +6,31 @@ import { BiCommentDetail } from "react-icons/bi";
 import { useCollection } from "../../hooks/useCollection";
 import { ImArrowDown, ImArrowUp } from "react-icons/im";
 import { AiOutlineArrowUp } from "react-icons/ai";
+import { auth, db } from "../../utils/firebase";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 const Container = styled.div`
-	border: 1px solid #737373;
 	padding: 1rem 0;
-	border-radius: 3px;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.primary};
 	display: flex;
+	cursor: pointer;
 `;
 
 const TopDetails = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.325rem;
-	color: #595959;
+	color: ${(props) => props.theme.black};
 	font-size: 0.9rem;
+
+	a {
+		color: ${(props) => props.theme.black};
+
+		:hover {
+			color: ${(props) => props.theme.accent};
+		}
+	}
 `;
 
 const GroupAvatar = styled.img`
@@ -33,12 +44,22 @@ const GroupDetails = styled.div`
 	display: flex;
 	gap: 0.5rem;
 	align-items: center;
-	color: #262626;
+	color: ${(props) => props.theme.black};
+
+	:hover {
+		color: ${(props) => props.theme.accent};
+	}
 `;
 
 const Content = styled.div`
 	margin: 1rem 0;
 	width: 100%;
+
+	color: ${(props) => props.theme.black};
+
+	:hover {
+		color: ${(props) => props.theme.accent};
+	}
 
 	> h2 {
 		font-size: 1.4rem;
@@ -61,6 +82,7 @@ const BottomDetails = styled.div`
 	gap: 0.5rem;
 	color: #595959;
 	font-size: 0.9rem;
+	color: ${(props) => props.theme.gray};
 `;
 
 const CommentDetails = styled.div`
@@ -82,14 +104,14 @@ const VotesContainer = styled.div`
 	}
 	> svg {
 		width: 2.5rem;
-		stroke: #1c3d52;
-		fill: #fff;
+		stroke: ${(props) => props.theme.neutral};
+		fill: ${(props) => props.theme.primary};
 		transition: all 0.1s ease-in-out;
 	}
 
 	> svg:hover {
-		stroke: #1c3d52;
-		fill: #1c3d52;
+		stroke: ${(props) => props.theme.accent};
+		fill: ${(props) => props.theme.accent};
 	}
 `;
 
@@ -116,8 +138,63 @@ const PostItem = ({ post }) => {
 		return null;
 	}
 
+	const upvote = async () => {
+		if (!auth.currentUser) {
+			return navigate("/login");
+		}
+
+		const postRef = doc(db, "posts", post.id);
+
+		if (!post.upvotes.some((upvote) => upvote === auth.currentUser.uid)) {
+			if (
+				post.downvotes.some(
+					(downvote) => downvote === auth.currentUser.uid
+				)
+			) {
+				updateDoc(postRef, {
+					downvotes: arrayRemove(auth.currentUser.uid),
+				});
+			}
+			updateDoc(postRef, {
+				upvotes: arrayUnion(auth.currentUser.uid),
+			});
+		} else {
+			updateDoc(postRef, {
+				upvotes: arrayRemove(auth.currentUser.uid),
+			});
+		}
+	};
+	const downvote = async () => {
+		if (!auth.currentUser) {
+			return navigate("/login");
+		}
+
+		const postRef = doc(db, "posts", post.id);
+
+		if (
+			!post.downvotes.some(
+				(downvote) => downvote === auth.currentUser.uid
+			)
+		) {
+			if (
+				post.upvotes.some((upvote) => upvote === auth.currentUser.uid)
+			) {
+				updateDoc(postRef, {
+					upvotes: arrayRemove(auth.currentUser.uid),
+				});
+			}
+			updateDoc(postRef, {
+				downvotes: arrayUnion(auth.currentUser.uid),
+			});
+		} else {
+			updateDoc(postRef, {
+				downvotes: arrayRemove(auth.currentUser.uid),
+			});
+		}
+	};
+
 	return (
-		<Container className=''>
+		<Container>
 			<VotesContainer>
 				<svg
 					clipRule='evenodd'
@@ -126,6 +203,7 @@ const PostItem = ({ post }) => {
 					strokeMiterlimit='2'
 					viewBox='0 0 24 24'
 					xmlns='http://www.w3.org/2000/svg'
+					onClick={() => upvote()}
 				>
 					<path
 						d='m9.001 10.978h-3.251c-.412 0-.75-.335-.75-.752 0-.188.071-.375.206-.518 1.685-1.775 4.692-4.945 6.069-6.396.189-.2.452-.312.725-.312.274 0 .536.112.725.312 1.377 1.451 4.385 4.621 6.068 6.396.136.143.207.33.207.518 0 .417-.337.752-.75.752h-3.251v9.02c0 .531-.47 1.002-1 1.002h-3.998c-.53 0-1-.471-1-1.002z'
@@ -139,6 +217,7 @@ const PostItem = ({ post }) => {
 					strokeLinejoin='round'
 					strokeMiterlimit='2'
 					viewBox='0 0 24 24'
+					onClick={() => downvote()}
 					xmlns='http://www.w3.org/2000/svg'
 				>
 					<path
@@ -150,51 +229,41 @@ const PostItem = ({ post }) => {
 
 			<DetailsContainer>
 				{/* Top  */}
-				<TopDetails className=''>
-					<Link className='' to={`/group/${post.group}`}>
+				<TopDetails>
+					<Link to={`/group/${post.group}`}>
 						<GroupDetails>
 							<GroupAvatar
-								className=''
 								src={group && group.photoURL}
 								alt='avatar'
 							/>
-							<p className=''> {group && group.name}</p>
+							<p> {group && group.name}</p>
 						</GroupDetails>
 					</Link>
 					<span>•</span>
-					<p className=''> Posted by </p>
-					<Link className='' to={`/profile/${user.id}`}>
+					<p> Posted by </p>
+					<Link to={`/profile/${user.id}`}>
 						{user && user.displayName}
 					</Link>
 				</TopDetails>
 
 				<Link to={`/group/${post.group}/post/${post.id}`}>
 					{/* Content */}
-					<Content className=''>
-						<h2 className=''>{post.title}</h2>
+					<Content>
+						<h2>{post.title}</h2>
 
-						<p className=''>
-							{`${post.content.substring(0, 200)}`}...
-						</p>
+						<p>{`${post.content.substring(0, 200)}`}...</p>
 						{/* Image */}
 						<div>
-							{post.photoURL && (
-								<Image
-									className='max-w-sm max-h-sm'
-									src={post.photoURL}
-								/>
-							)}
+							{post.photoURL && <Image src={post.photoURL} />}
 						</div>
 					</Content>
 				</Link>
 
 				<BottomDetails>
 					{/* Comments */}
-					<CommentDetails className=''>
+					<CommentDetails>
 						<BiCommentDetail />
-						<p className=''>
-							{comments && comments.length} Comments
-						</p>
+						<p>{comments && comments.length} Comments</p>
 					</CommentDetails>
 				</BottomDetails>
 			</DetailsContainer>

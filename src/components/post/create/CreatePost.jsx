@@ -7,63 +7,77 @@ import toast from "react-hot-toast";
 import styled from "styled-components";
 import { useCollection } from "../../../hooks/useCollection";
 import { useAuthContext } from "../../../hooks/useAuthContext";
-import Wrapper from "../../layout/Wrapper";
+import Select from "./Select";
 
 const Container = styled.div`
-	padding-top: 4rem;
+	margin: 4rem 0;
+	padding: 1.5rem;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
 `;
 
 const Header = styled.h2`
 	font-size: 1.8rem;
 	font-weight: 700;
 	margin-bottom: 2rem;
+	color: ${(props) => props.theme.black};
 `;
 
 const Form = styled.form`
+	margin: 1rem 0;
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 2rem;
 `;
-const Select = styled.select`
-	margin-bottom: 1rem;
-	border-radius: 3px;
-	> option[value=""] {
-		display: none;
-	}
-`;
-
-const Option = styled.option``;
 
 const Label = styled.label`
 	display: block;
 	text-transform: capitalize;
 	margin-bottom: 0.5rem;
+	color: ${(props) => props.theme.darkGray};
 `;
 const Input = styled.input`
 	width: 100%;
 	border: 1px solid #1c3d52;
-	border-radius: 3px;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+
 	:focus {
-		border: 1px solid #1c3d52;
+		border: 1px solid ${(props) => props.theme.accent};
 		outline: none;
 	}
 `;
 const TextArea = styled.textarea`
 	width: 100%;
 	border: 1px solid #1c3d52;
-	border-radius: 3px;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
 	:focus {
-		border: 1px solid #1c3d52;
+		border: 1px solid ${(props) => props.theme.accent}};
 		outline: none;
 	}
 `;
 const Button = styled.button`
-	border-radius: 3px;
-	background-color: #1c3d52;
+	cursor: pointer;
+	border-radius: 20px;
+
+	background-color: ${(props) => props.theme.accent};
 	margin-top: 1rem;
-	padding: 0.7rem 1.5rem;
+	padding: 1rem 2rem;
+	width: 100%;
 	color: white;
+	font-size: 1rem;
 	font-weight: 600;
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
+
+	:active {
+		outline: 0;
+	}
 `;
 
 const CreatePost = () => {
@@ -123,23 +137,12 @@ const CreatePost = () => {
 	};
 
 	return (
-		<Wrapper className=''>
+		<div>
 			<Container>
 				<Header>Create a Post</Header>
-				<Select
-					onChange={(e) => setSelectedGroupId(() => e.target.value)}
-					value={selectedGroupId ? selectedGroupId : ""}
-				>
-					<Option value=''>Select a group</Option>
-					{groups &&
-						groups.map((group) => {
-							return (
-								<Option key={group.id} value={group.id}>
-									{group.name}
-								</Option>
-							);
-						})}
-				</Select>
+				<div></div>
+
+				<Select setSelect={setSelectedGroupId} list={groups} />
 				<Form onSubmit={handleSubmit}>
 					<div>
 						<Label>Title</Label>
@@ -148,7 +151,6 @@ const CreatePost = () => {
 							name='title'
 							value={title}
 							onChange={handleChange}
-							className=''
 							autocomplete='off'
 						/>
 					</div>
@@ -159,7 +161,6 @@ const CreatePost = () => {
 							name='content'
 							value={content}
 							onChange={handleChange}
-							className=''
 							autocomplete='off'
 						/>
 					</div>
@@ -172,18 +173,16 @@ const CreatePost = () => {
 
 					<div>
 						{!selectedGroupId ? (
-							<Button disabled type='submit' className=''>
+							<Button disabled type='submit'>
 								Create Post
 							</Button>
 						) : (
-							<Button type='submit' className=''>
-								Create Post
-							</Button>
+							<Button type='submit'>Create Post</Button>
 						)}
 					</div>
 				</Form>
 			</Container>
-		</Wrapper>
+		</div>
 	);
 };
 

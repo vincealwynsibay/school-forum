@@ -37,9 +37,9 @@ const Reply = ({ reply, idx }) => {
 			<div style={{ width: "18rem" }} className={`mx-${idx * 3}`}>
 				<div>
 					<h2>{replyUser && replyUser.displayName}</h2>
-					<p className='mb-2 text-muted'>{reply.content}</p>
+					<p>{reply.content}</p>
 
-					{/* <Card.Subtitle className='mb-2'>
+					{/* <Card.Subtitle >
 						<CreateReply saveNewReply={handleReplyToReply} />
 					</Card.Subtitle> */}
 					{/* <div>

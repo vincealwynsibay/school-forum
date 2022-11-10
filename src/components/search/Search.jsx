@@ -5,38 +5,39 @@ import styled from "styled-components";
 
 const Form = styled.form`
 	display: grid;
-	grid-template-columns: 1fr minmax(45px, 10%);
+	grid-template-columns: 1fr;
+	position: relative;
+	align-items: center;
+	width: 12rem;
+
+	@media (min-width: 481px) {
+		width: 18rem;
+	}
+
 	@media screen and (min-width: 48rem) {
+		width: 26rem;
 		margin: 0;
 	}
 `;
 
 const Input = styled.input`
-	border: 1px solid #1a202c;
-	border-radius: 3px 0 0 3px;
-	padding: 0.5rem 1rem;
+	border: ${(props) => props.theme.primary}} ;
+	border-radius: 20px;
+	background-color: ${(props) => props.theme.primary}} 
+	padding: 0.8rem 1rem;
+	padding-left: calc(1rem + 2rem);
+	grid-column: 1/1;
 
-	:focus {
+	&:focus {
 		outline: none;
-	}
-`;
-
-const Button = styled.button`
-	cursor: pointer;
-	border: 1px solid #1a202c;
-	border-radius: 0 3px 3px 0;
-	padding: 0.5rem 1rem;
-	background: #1c3d52;
-	transition: background-color 0.2s ease-in-out;
-	:hover {
-		// background-color: #1cb66e;
+		border: 1px solid ${(props) => props.theme.accent}};
 	}
 `;
 
 const SearchIcon = styled(BsSearch)`
-	width: 1rem;
-	color: white;
-	transform: scale(1.5);
+	position: absolute;
+	left: 15px;
+	grid-column: 1/1;
 `;
 
 function Search() {
@@ -55,14 +56,14 @@ function Search() {
 	};
 
 	return (
-		<div>
-			<Form onSubmit={handleSubmit}>
-				<Input type='text' onChange={(e) => setQuery(e.target.value)} />
-				<Button>
-					<SearchIcon />
-				</Button>
-			</Form>
-		</div>
+		<Form onSubmit={handleSubmit}>
+			<Input
+				type='text'
+				placeholder='Search'
+				onChange={(e) => setQuery(e.target.value)}
+			/>
+			<SearchIcon />
+		</Form>
 	);
 }
 

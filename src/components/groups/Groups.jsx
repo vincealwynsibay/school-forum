@@ -3,7 +3,6 @@ import { useCollection } from "../../hooks/useCollection";
 import GroupsList from "./GroupsList";
 import { Link } from "react-router-dom";
 import { auth } from "../../utils/firebase";
-import Wrapper from "../layout/Wrapper";
 import styled from "styled-components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
@@ -11,16 +10,22 @@ const Top = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin-top: 2rem;
+	margin: 2rem 0;
 
 	> h2 {
 		font-size: 2rem;
 	}
 
 	> a {
-		background-color: #1c3d52;
+		border: 1px solid ${(props) => props.theme.accent};
 		padding: 0.8rem 1.5rem;
-		color: #fff;
+		border-radius: 20px;
+		color: ${(props) => props.theme.black};
+
+		:hover {
+			background: ${(props) => props.theme.accent};
+			color: #fff;
+		}
 	}
 `;
 
@@ -34,16 +39,16 @@ const Groups = () => {
 	]);
 
 	return (
-		<Wrapper className=''>
-			<Top className=''>
-				<h2 className=''>Groups</h2>
+		<div>
+			<Top>
+				<h2>Groups</h2>
 				{auth.currentUser && (
 					<Link to='/group/create'>Create Group</Link>
 				)}
 			</Top>
 			{error && <p>{error.message}</p>}
 			<GroupsList groups={documents} />
-		</Wrapper>
+		</div>
 	);
 };
 

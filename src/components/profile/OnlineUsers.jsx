@@ -5,7 +5,7 @@ export default function OnlineUsers() {
 	const { isPending, error, documents } = useCollection("users");
 
 	return (
-		<div className='user-list'>
+		<div>
 			<h2>All Online Users</h2>
 			{isPending && <div>Loading users...</div>}
 			{error && <div>{error}</div>}

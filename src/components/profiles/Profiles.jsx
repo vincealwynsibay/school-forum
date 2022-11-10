@@ -5,7 +5,7 @@ const Profiles = () => {
 	const { documents, error } = useCollection("users");
 	return (
 		<div>
-			{error && <p className='text-danger'>{error.message}</p>}
+			{error && <p>{error.message}</p>}
 			<ProfilesList profiles={documents} />
 		</div>
 	);

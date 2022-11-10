@@ -3,10 +3,11 @@ import GroupItem from "./GroupItem";
 import styled from "styled-components";
 
 const Container = styled.div`
-	margin-top: 2rem;
+	margin: 1rem;
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 2rem;
+	margin: 2rem 0;
 `;
 
 const GroupsList = ({ groups }) => {
@@ -15,7 +16,7 @@ const GroupsList = ({ groups }) => {
 	}
 
 	return (
-		<Container className=''>
+		<Container>
 			{groups &&
 				groups.map((group) => (
 					<GroupItem key={group.id} group={group} />

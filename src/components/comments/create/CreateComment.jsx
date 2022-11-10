@@ -7,16 +7,23 @@ const Form = styled.form`
 	gap: 1rem;
 
 	> textarea {
+		border-radius: 20px;
 		:focus {
 			outline: none;
+			border: 1px solid ${(props) => props.theme.accent};
 		}
 	}
 
 	> button {
 		padding: 1rem 2rem;
-		background-color: #1c3d52;
+		background-color: ${(props) => props.theme.accent};
+		border-radius: 20px;
 		color: white;
 		font-weight: 700;
+
+		:hover {
+			background-color: ${(props) => props.theme.accentHover};
+		}
 	}
 `;
 

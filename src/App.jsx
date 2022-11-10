@@ -35,7 +35,6 @@ import "./App.css";
 import Home from "./components/home/Home";
 import SearchResults from "./components/search/SearchResults";
 import Search from "./components/search/Search";
-import Filter from "./components/filter/Filter";
 import Wrapper from "./components/layout/Wrapper";
 
 const Container = styled.div`
@@ -65,6 +64,10 @@ const Container = styled.div`
 	}
 `;
 
+const Main = styled.div`
+	background-color: ${(props) => props.theme.neutral};
+`;
+
 const SearchAndFilterContainer = styled.div`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -80,7 +83,6 @@ const SearchAndFilterContainer = styled.div`
 
 const App = () => {
 	const { isAuthReady, user } = useAuthContext();
-	const [filter, setFilter] = useState(null);
 	return (
 		<Container>
 			{isAuthReady && (
@@ -88,108 +90,107 @@ const App = () => {
 					{/* Sidebar */}
 					<NavigationBar />
 					{/* Main Content */}
-					<div>
+					<Main>
 						{/* Search And Filter */}
-						{/* <Wrapper>
-							<SearchAndFilterContainer>
-								<Search />
-								<Filter
-									list={["New", "Top"]}
-									setFilter={setFilter}
-								/>
-							</SearchAndFilterContainer>
-						</Wrapper> */}
+						<Wrapper>
+							<Search />
+						</Wrapper>
 
 						{/* Content */}
-						<Routes>
-							<Route
-								exact
-								path='/'
-								element={<Home filter={filter} />}
-							/>
-							Auth
-							<Route
-								path='login'
-								element={user ? <Navigate to='/' /> : <Login />}
-							/>
-							<Route
-								path='register'
-								element={
-									user ? <Navigate to='/' /> : <Signup />
-								}
-							/>
-							{/*  Profiles */}
-							<Route path='/profiles' element={<Profiles />} />
-							<Route path='/profile/:id' element={<Profile />} />
-							{/* Profiles Followers & Following */}
-							<Route
-								path='/profile/:id/followers'
-								element={<Followers />}
-							/>
-							<Route
-								path='/profile/:id/following'
-								element={<Following />}
-							/>
-							{/* Groups */}
-							<Route path='/groups' element={<Groups />} />
-							<Route
-								path='/posts'
-								filter={filter}
-								element={<Posts />}
-							/>
-							<Route path='/group/:id' element={<Group />} />
-							{/* Group Members */}
-							<Route
-								path='/group/:id/members'
-								element={<Members />}
-							/>
-							{/* Group Posts */}
-							<Route
-								path='/group/:id/posts'
-								element={<Posts />}
-							/>
-							<Route
-								path='/group/:group_id/post/:post_id'
-								element={<Post />}
-							/>
-							{/* Search */}
-							<Route path='/search' element={<SearchResults />} />
-							{/* PRIVATE ROUTES */}
-							{/* Profile */}
-							<Route
-								path={`/settings/profile`}
-								element={
-									<PrivateRoute Component={EditProfile} />
-								}
-							/>
-							{/* Account */}
-							<Route
-								path={`/settings/account`}
-								element={
-									<PrivateRoute Component={EditAccount} />
-								}
-							/>
-							{/* Group */}
-							<Route
-								path='/group/create'
-								element={<CreateGroup />}
-							/>
-							{/* Post */}
-							<Route
-								path='/group/:group_id/post/create'
-								element={<CreatePost />}
-							/>
-							<Route
-								path='/posts/create'
-								element={<CreatePost />}
-							/>
-							{/* Post */}
-							<Route
-								path='/group/:group_id/post/:post_id/edit'
-								element={<EditPost />}
-							/>
-						</Routes>
-					</div>
+						<Wrapper>
+							<Routes>
+								<Route exact path='/' element={<Home />} />
+								Auth
+								<Route
+									path='login'
+									element={
+										user ? <Navigate to='/' /> : <Login />
+									}
+								/>
+								<Route
+									path='register'
+									element={
+										user ? <Navigate to='/' /> : <Signup />
+									}
+								/>
+								{/*  Profiles */}
+								<Route
+									path='/profiles'
+									element={<Profiles />}
+								/>
+								<Route
+									path='/profile/:id'
+									element={<Profile />}
+								/>
+								{/* Profiles Followers & Following */}
+								<Route
+									path='/profile/:id/followers'
+									element={<Followers />}
+								/>
+								<Route
+									path='/profile/:id/following'
+									element={<Following />}
+								/>
+								{/* Groups */}
+								<Route path='/groups' element={<Groups />} />
+								<Route path='/posts' element={<Posts />} />
+								<Route path='/group/:id' element={<Group />} />
+								{/* Group Members */}
+								<Route
+									path='/group/:id/members'
+									element={<Members />}
+								/>
+								{/* Group Posts */}
+								<Route
+									path='/group/:id/posts'
+									element={<Posts />}
+								/>
+								<Route
+									path='/group/:group_id/post/:post_id'
+									element={<Post />}
+								/>
+								{/* Search */}
+								<Route
+									path='/search'
+									element={<SearchResults />}
+								/>
+								{/* PRIVATE ROUTES */}
+								{/* Profile */}
+								<Route
+									path={`/settings/profile`}
+									element={
+										<PrivateRoute Component={EditProfile} />
+									}
+								/>
+								{/* Account */}
+								<Route
+									path={`/settings/account`}
+									element={
+										<PrivateRoute Component={EditAccount} />
+									}
+								/>
+								{/* Group */}
+								<Route
+									path='/group/create'
+									element={<CreateGroup />}
+								/>
+								{/* Post */}
+								<Route
+									path='/group/:group_id/post/create'
+									element={<CreatePost />}
+								/>
+								<Route
+									path='/posts/create'
+									element={<CreatePost />}
+								/>
+								{/* Post */}
+								<Route
+									path='/group/:group_id/post/:post_id/edit'
+									element={<EditPost />}
+								/>
+							</Routes>
+						</Wrapper>
+					</Main>
 					<Toaster />
 				</Router>
 			)}

@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 const File = styled.label`
 	border: 1px solid #1c3d52;
+	border-radius: 20px;
 	display: inline-block;
 	padding: 0.7rem 1.5rem;
 	cursor: pointer;
@@ -20,6 +21,10 @@ const File = styled.label`
 		> svg {
 			transform: scale(1.3);
 		}
+	}
+
+	:hover {
+		background-color: ${(props) => props.theme.accent};
 	}
 
 	> input {
@@ -74,12 +79,7 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 					<FiUpload />
 					Upload File
 				</div>
-				<input
-					type='file'
-					name='avatar'
-					onChange={handleFileChange}
-					className=''
-				/>
+				<input type='file' name='avatar' onChange={handleFileChange} />
 			</File>
 			{uploading && <p>Uploading</p>}
 		</div>

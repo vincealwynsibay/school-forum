@@ -9,24 +9,42 @@ const Container = styled.div`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border: 1px solid #ccc;
 	padding: 1rem;
-	border-radius: 3px;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
+	cursor: pointer;
 `;
 const Avatar = styled.img`
 	width: 3.5rem;
+	height: 3.5rem;
 	border-radius: 50%;
 `;
 const Content = styled.div`
 	display: flex;
 	gap: 1rem;
 	align-items: center;
+	color: ${(props) => props.theme.black};
+
+	p {
+		margin: 0.5rem;
+	}
+	p:first-of-type {
+		font-weight: 700;
+		font-size: 1.2rem;
+		:hover {
+			color: ${(props) => props.theme.accent};
+	}
+
 `;
 const Button = styled.button`
 	padding: 0.8rem 1.5rem;
-	background-color: #1c3d52;
+	background-color: ${(props) => props.theme.accent};
 	color: white;
-	border-radius: 3px;
+	border-radius: 20px;
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
 `;
 
 const GroupItem = ({ group }) => {
@@ -51,7 +69,7 @@ const GroupItem = ({ group }) => {
 
 	return (
 		<Container>
-			<Link to={`/group/${group.id}`} className='group'>
+			<Link to={`/group/${group.id}`}>
 				<Content>
 					<div>
 						<Avatar
@@ -66,12 +84,15 @@ const GroupItem = ({ group }) => {
 				</Content>
 			</Link>
 
-			{group &&
-			group.members.some((member) => member === auth.currentUser.uid) ? (
-				<Button onClick={leaveGroup}>Leave Group</Button>
-			) : (
-				<Button onClick={joinGroup}>Join Group</Button>
-			)}
+			{auth.currentUser &&
+				(group &&
+				group.members.some(
+					(member) => member === auth.currentUser.uid
+				) ? (
+					<Button onClick={leaveGroup}>Leave Group</Button>
+				) : (
+					<Button onClick={joinGroup}>Join Group</Button>
+				))}
 		</Container>
 	);
 };

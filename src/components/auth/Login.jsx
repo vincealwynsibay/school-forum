@@ -2,8 +2,72 @@ import React, { useState } from "react";
 import { useLogin } from "../../hooks/useLogin";
 import { Link } from "react-router-dom";
 import Spinner from "../spinner/Spinner";
-import { LockClosedIcon } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
+import styled from "styled-components";
+
+const Container = styled.div`
+	margin: 4rem 0;
+	padding: 1.5rem;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
+
+	h2 {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+`;
+
+const Button = styled.button`
+	cursor: pointer;
+	border-radius: 20px;
+
+	background-color: ${(props) => props.theme.accent};
+	margin-top: 1rem;
+	padding: 1rem 2rem;
+	width: 100%;
+	color: white;
+	font-size: 1rem;
+	font-weight: 600;
+
+	:hover {
+		background-color: ${(props) => props.theme.accentHover};
+	}
+`;
+
+const Form = styled.form`
+	margin: 1rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	> div {
+		display: flex;
+		flex-direction: column;
+	}
+`;
+
+const Label = styled.label`
+	display: block;
+	text-transform: capitalize;
+	margin-bottom: 0.5rem;
+	color: ${(props) => props.theme.darkGray};
+`;
+const Input = styled.input`
+	width: 100%;
+	border: 1px solid #1c3d52;
+	border-radius: 20px;
+	padding: 0.8rem 1.5rem;
+	font-size: 1rem;
+
+	:focus {
+		border: 1px solid ${(props) => props.theme.accent};
+		outline: none;
+	}
+`;
+
+const SignUpLink = styled(Link)`
+	color: ${(props) => props.theme.accent};
+`;
 
 const Login = () => {
 	const { login, isPending, error } = useLogin();
@@ -24,99 +88,50 @@ const Login = () => {
 	};
 
 	return (
-		<>
-			<div className='min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8'>
-				<div className='max-w-md w-full space-y-8'>
-					<div>
-						{/* <img
-							className=''
-							src='https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg'
-							alt='Workflow'
-						/>
-						<span className='absolute left-0 inset-y-0 flex items-center pl-3'> */}
-						<LockClosedIcon
-							className='mx-auto h-12 w-auto text-indigo-500 '
-							aria-hidden='true'
-						/>
-						{/* </span> */}
-						<h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
-							Sign in to your account
-						</h2>
-					</div>
-					<form className='mt-8 space-y-6' onSubmit={onSubmit}>
-						<input
-							type='hidden'
-							name='remember'
-							defaultValue='true'
-						/>
-						<div className='rounded-md shadow-sm -space-y-px'>
-							<div>
-								<label
-									htmlFor='email-address'
-									className='sr-only'
-								>
-									Email address
-								</label>
-								<input
-									id='email-address'
-									name='email'
-									type='email'
-									autoComplete='email'
-									onChange={onChange}
-									required
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-									placeholder='Email address'
-								/>
-							</div>
-							<div>
-								<label htmlFor='password' className='sr-only'>
-									Password
-								</label>
-								<input
-									id='password'
-									name='password'
-									type='password'
-									autoComplete='current-password'
-									required
-									className='appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
-									placeholder='Password'
-									onChange={onChange}
-								/>
-							</div>
-						</div>
-
-						<div>
-							{isPending ? (
-								<button
-									type='submit'
-									className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-									disabled
-								>
-									loading...
-								</button>
-							) : (
-								<button
-									type='submit'
-									className='group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-								>
-									Sign in
-								</button>
-							)}
-							{error && <p className='text-danger'>{error}</p>}
-						</div>
-					</form>
-					<p>
-						Don't have an account?{" "}
-						<Link
-							to='/register'
-							className='text-indigo-600 hover:text-indigo-700'
-						>
-							Sign Up
-						</Link>
-					</p>
+		<Container>
+			<h2>Sign in to your account</h2>
+			<Form onSubmit={onSubmit}>
+				<div>
+					<Label htmlFor='email-address'>Email address</Label>
+					<Input
+						id='email-address'
+						name='email'
+						type='email'
+						autoComplete='email'
+						onChange={onChange}
+						required
+						placeholder='Email address'
+					/>
 				</div>
-			</div>
-		</>
+				<div>
+					<Label htmlFor='password'>Password</Label>
+					<Input
+						id='password'
+						name='password'
+						type='password'
+						autoComplete='current-password'
+						required
+						placeholder='Password'
+						onChange={onChange}
+					/>
+				</div>
+
+				<div>
+					{isPending ? (
+						<Button type='submit' disabled>
+							loading...
+						</Button>
+					) : (
+						<Button type='submit'>Sign in</Button>
+					)}
+					{error && <p>{error}</p>}
+				</div>
+			</Form>
+			<p>
+				Don't have an account?{" "}
+				<SignUpLink to='/register'>Sign Up</SignUpLink>
+			</p>
+		</Container>
 	);
 };
 

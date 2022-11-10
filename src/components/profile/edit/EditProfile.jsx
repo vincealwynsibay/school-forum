@@ -3,13 +3,44 @@ import { doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import React, { useEffect, useState } from "react";
 import { useDocument } from "../../../hooks/useDocument";
-import useUploadFile from "../../../hooks/useUploadFile";
 import { auth, db, storage } from "../../../utils/firebase";
+import { BsArrowLeft } from "react-icons/bs";
+import styled from "styled-components";
 import ChangeAvatar from "./ChangeAvatar";
 import ChangeBio from "./ChangeBio";
 import ChangeDisplayName from "./ChangeDisplayName";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+
+const Container = styled.div`
+	margin: 2rem;
+`;
+
+const Back = styled(Link)`
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	margin: 1rem 0;
+	font-size: 1.1rem;
+	svg {
+		transform: scale(1.5);
+	}
+`;
+
+const ProfileForm = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	margin: 2rem 0;
+	padding: 1.5rem;
+	background-color: ${(props) => props.theme.primary};
+	border-radius: 20px;
+
+	h3 {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+`;
 
 const EditProfile = () => {
 	const [formData, setFormData] = useState({
@@ -21,7 +52,6 @@ const EditProfile = () => {
 
 	const { uid } = auth.currentUser;
 	const { document, error, isPending } = useDocument("users", uid);
-	const { uploadFile } = useUploadFile();
 
 	useEffect(() => {
 		if (!isPending) {
@@ -54,83 +84,25 @@ const EditProfile = () => {
 		toast.success("Profile updated successfully");
 	};
 
-	const handleSaveAvatarChanges = async (file) => {
-		const storageRef = ref(storage, `profiles/${document.id}/${file.name}`);
-		await uploadFile(storageRef, file);
-		const url = await getDownloadURL(
-			ref(storage, `profiles/${document.id}/${file.name}`)
-		);
-
-		await updateDoc(firestoreRef, {
-			photoURL: url,
-		});
-		toast.success("Profile updated successfully");
-	};
-
 	return (
-		<div>
-			<div className='md:flex md:flex-col md:gap-6 mt-10 px-2 sm:px-6 lg:px-8'>
-				<div className='md:col-span-1'>
-					<div className='px-4 sm:px-0'>
-						<Link to={`/profile/${auth && auth.currentUser.uid}`}>
-							<h3 className='text-md text-indigo-500 font-bold leading-6 flex items-center gap-2'>
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									className='h-6 w-6'
-									fill='none'
-									viewBox='0 0 24 24'
-									stroke='currentColor'
-									strokeWidth={2}
-								>
-									<path
-										strokeLinecap='round'
-										strokeLinejoin='round'
-										d='M7 16l-4-4m0 0l4-4m-4 4h18'
-									/>
-								</svg>{" "}
-								Go Back to Profile
-							</h3>
-						</Link>
-					</div>
+		<Container>
+			<Back to={`/profile/${auth && auth.currentUser.uid}`}>
+				<BsArrowLeft />
+				Go Back to Profile
+			</Back>
+			<ProfileForm>
+				<div>
+					<h3>Change Profile</h3>
+					<p>
+						This information will be displayed publicly so be
+						careful what you share.
+					</p>
 				</div>
-			</div>
-			<div className='md:flex md:flex-col md:gap-6 mt-10 px-2 sm:px-6 lg:px-8'>
-				<div className='md:col-span-1'>
-					<div className='px-4 sm:px-0'>
-						<h3 className='text-xl  font-bold leading-6 text-gray-900'>
-							Change Profile
-						</h3>
-						<p className='mt-1 text-sm text-gray-600'>
-							This information will be displayed publicly so be
-							careful what you share.
-						</p>
-					</div>
-				</div>
-				<div className='mt-5 md:mt-0 md:col-span-2'>
-					<div className='shadow sm:rounded-md sm:overflow-hidden'>
-						<div className='px-4 py-5 bg-white space-y-6 sm:p-6'>
-							<ChangeDisplayName
-								displayName={displayName}
-								handleChange={handleChange}
-								handleSaveChanges={handleSaveChanges}
-							/>
-							<ChangeBio
-								bio={bio}
-								handleChange={handleChange}
-								handleSaveChanges={handleSaveChanges}
-							/>
-							<ChangeAvatar
-								avatar={avatar}
-								handleChange={handleChange}
-								handleSaveAvatarChanges={
-									handleSaveAvatarChanges
-								}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+				<ChangeDisplayName user_id={uid} />
+				<ChangeBio user_id={uid} />
+				<ChangeAvatar user_id={uid} />
+			</ProfileForm>
+		</Container>
 	);
 };
 
