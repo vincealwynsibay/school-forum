@@ -59,7 +59,7 @@ const CreatePostContainer = styled.div`
 	align-items: center;
 	gap: 1rem;
 	padding: 1rem;
-	margin-top: 1rem;
+	margin-top: 2rem;
 	border-radius: 20px;
 	background-color: ${(props) => props.theme.primary};
 `;

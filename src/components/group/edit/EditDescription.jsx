@@ -72,7 +72,7 @@ const Form = styled.form`
 		> button {
 			border-radius: 3px;
 			border: 1px solid ${(props) => props.theme.accent};
-			margin-top: 1rem;
+			margin-top: 2rem;
 			padding: 0.8rem;
 			color: ${(props) => props.theme.black};
 			font-weight: 600;

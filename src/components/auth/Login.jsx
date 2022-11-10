@@ -22,7 +22,7 @@ const Button = styled.button`
 	border-radius: 20px;
 
 	background-color: ${(props) => props.theme.accent};
-	margin-top: 1rem;
+	margin-top: 2rem;
 	padding: 1rem 2rem;
 	width: 100%;
 	color: white;

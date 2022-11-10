@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { GrFilter } from "react-icons/gr";
 
@@ -41,12 +41,26 @@ const Options = styled.div`
 	}
 `;
 
-function Select({ list, setSelect }) {
+function Select({ list, value, setSelect }) {
 	const [show, setShow] = useState(false);
+	const [selected, setSelected] = useState(null);
+
+	useEffect(() => {
+		if (value) {
+			list &&
+				list.find((item) => {
+					if (item.id === value) {
+						setSelected(item.name);
+						setSelect(item.id);
+					}
+				});
+		}
+	}, []);
+
 	return (
 		<Container>
 			<SelectContainer onClick={() => setShow((prevVal) => !prevVal)}>
-				<div>Select Group</div>
+				<div>{selected ? selected : "Select Group"}</div>
 				<Options>
 					{show &&
 						list.map((item) => {
@@ -54,7 +68,10 @@ function Select({ list, setSelect }) {
 								<div
 									key={item.id}
 									value={item.id}
-									onClick={() => setSelect(item.id)}
+									onClick={() => {
+										setSelect(item.id);
+										setSelected(item.name);
+									}}
 								>
 									{item.name}
 								</div>

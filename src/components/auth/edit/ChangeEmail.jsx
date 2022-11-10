@@ -31,7 +31,7 @@ const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
-	margin-top: 1rem;
+	margin-top: 2rem;
 
 	> input {
 		width: 100%;
@@ -56,7 +56,7 @@ const Button = styled.button`
 	background: none;
 	border: 1px solid ${(props) => props.theme.accent};
 	border-radius: 3px;
-	margin-top: 1rem;
+	margin-top: 2rem;
 	padding: 0.8rem;
 	color: ${(props) => props.theme.black};
 	font-weight: 600;

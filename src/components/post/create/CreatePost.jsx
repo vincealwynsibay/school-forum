@@ -64,7 +64,7 @@ const Button = styled.button`
 	border-radius: 20px;
 
 	background-color: ${(props) => props.theme.accent};
-	margin-top: 1rem;
+	margin-top: 2rem;
 	padding: 1rem 2rem;
 	width: 100%;
 	color: white;
@@ -142,7 +142,11 @@ const CreatePost = () => {
 				<Header>Create a Post</Header>
 				<div></div>
 
-				<Select setSelect={setSelectedGroupId} list={groups} />
+				<Select
+					setSelect={setSelectedGroupId}
+					value={selectedGroupId}
+					list={groups && groups}
+				/>
 				<Form onSubmit={handleSubmit}>
 					<div>
 						<Label>Title</Label>

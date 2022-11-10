@@ -21,8 +21,8 @@ import {
 import { useCollection } from "../../hooks/useCollection";
 
 const Container = styled.div`
-	margin-top: 10rem;
 	margin: 0 auto;
+	margin-top: 2rem;
 	padding: 2rem 0;
 	border-radius: 20px;
 	background-color: ${(props) => props.theme.primary};

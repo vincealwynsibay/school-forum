@@ -32,6 +32,10 @@ const File = styled.label`
 	}
 `;
 
+const Image = styled.img`
+	max-width: 100%;
+`;
+
 const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 	const [photo, setPhoto] = useState(null);
 	const { uploadFile, uploading } = useUploadFile();
@@ -73,7 +77,7 @@ const AddPhoto = ({ handlePhotoChange, photo: post_photo }) => {
 
 	return (
 		<div>
-			<img src={post_photo && post_photo} />
+			<Image src={post_photo && post_photo} />
 			<File>
 				<div>
 					<FiUpload />
