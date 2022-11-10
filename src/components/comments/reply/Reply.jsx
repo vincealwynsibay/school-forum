@@ -34,7 +34,7 @@ const Reply = ({ reply, idx }) => {
 
 	return (
 		<div>
-			<div style={{ width: "18rem" }} className={`mx-${idx * 3}`}>
+			<div style={{ width: "18rem" }}>
 				<div>
 					<h2>{replyUser && replyUser.displayName}</h2>
 					<p>{reply.content}</p>

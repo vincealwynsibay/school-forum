@@ -5,7 +5,6 @@ import { useDocument } from "../../hooks/useDocument";
 import { auth, db } from "../../utils/firebase";
 import Spinner from "../spinner/Spinner";
 import { Link } from "react-router-dom";
-import { Tab } from "@headlessui/react";
 import { useCollection } from "../../hooks/useCollection";
 import PostsList from "../posts/PostsList";
 import { MdOutlineModeEditOutline } from "react-icons/md";

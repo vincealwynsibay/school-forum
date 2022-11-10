@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useSignup } from "../../hooks/useSignup";
 import Spinner from "../spinner/Spinner";
 import { Link } from "react-router-dom";
-import { LockClosedIcon } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
 import styled from "styled-components";
 

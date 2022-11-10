@@ -109,7 +109,7 @@ const NavigationBar = () => {
 				{user ? (
 					<>
 						<h1 to='/'>School Forum</h1>
-						<Link to='/' className='home'>
+						<Link to='/'>
 							<AiOutlineHome /> Home
 						</Link>
 						<Link to={`/profile/${user.uid}`}>
